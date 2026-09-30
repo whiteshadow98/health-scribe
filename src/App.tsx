@@ -1,110 +1,102 @@
+import { History, Lightbulb, NotebookPen, Settings, ShieldCheck, WifiOff } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { HistoryTab } from './components/HistoryTab'
+import { InsightsTab } from './components/InsightsTab'
+import { LogEntryTab } from './components/LogEntryTab'
+import { SettingsSheet } from './components/SettingsSheet'
+import { LlmProvider } from './lib/llm'
 
-type Status = 'checking' | 'yes' | 'no'
+type Tab = 'log' | 'history' | 'insights'
 
-type DeviceReport = {
-  webgpu: Status
-  shaderF16: Status
-  memoryGb: number | null
-  gpu: string
-}
+const TABS: { id: Tab; label: string; icon: typeof History }[] = [
+  { id: 'log', label: 'Log Entry', icon: NotebookPen },
+  { id: 'history', label: 'History', icon: History },
+  { id: 'insights', label: 'Insights', icon: Lightbulb },
+]
 
-// Minimal WebGPU surface used for the device check (full types are not in lib.dom).
-type GpuAdapter = {
-  features: Set<string>
-  info?: { vendor?: string; architecture?: string }
-}
-type NavigatorWithGpu = Navigator & {
-  gpu?: { requestAdapter: () => Promise<GpuAdapter | null> }
-  deviceMemory?: number
-}
-
-async function checkDevice(): Promise<DeviceReport> {
-  const nav = navigator as NavigatorWithGpu
-  const memoryGb = nav.deviceMemory ?? null
-  if (!nav.gpu) return { webgpu: 'no', shaderF16: 'no', memoryGb, gpu: 'Not available' }
-
-  const adapter = await nav.gpu.requestAdapter().catch(() => null)
-  if (!adapter) return { webgpu: 'no', shaderF16: 'no', memoryGb, gpu: 'No adapter found' }
-
-  const gpu = [adapter.info?.vendor, adapter.info?.architecture].filter(Boolean).join(' ') || 'Unknown'
-  return {
-    webgpu: 'yes',
-    shaderF16: adapter.features.has('shader-f16') ? 'yes' : 'no',
-    memoryGb,
-    gpu,
-  }
-}
-
-function Row({ label, status, detail }: { label: string; status: Status; detail?: string }) {
-  const badge = {
-    checking: 'bg-slate-100 text-slate-600',
-    yes: 'bg-emerald-100 text-emerald-800',
-    no: 'bg-rose-100 text-rose-800',
-  }[status]
-  const text = { checking: 'Checking', yes: 'Supported', no: 'Not supported' }[status]
-
-  return (
-    <div className="flex items-center justify-between gap-4 py-3">
-      <div>
-        <p className="font-medium text-slate-900">{label}</p>
-        {detail && <p className="text-sm text-slate-500">{detail}</p>}
-      </div>
-      <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${badge}`}>{text}</span>
-    </div>
-  )
+function useOnline() {
+  const [online, setOnline] = useState(() => navigator.onLine)
+  useEffect(() => {
+    const update = () => setOnline(navigator.onLine)
+    window.addEventListener('online', update)
+    window.addEventListener('offline', update)
+    return () => {
+      window.removeEventListener('online', update)
+      window.removeEventListener('offline', update)
+    }
+  }, [])
+  return online
 }
 
 export default function App() {
-  const [report, setReport] = useState<DeviceReport | null>(null)
-
-  useEffect(() => {
-    checkDevice().then(setReport)
-  }, [])
-
-  const recommendedModel =
-    report?.webgpu !== 'yes'
-      ? 'None (this device cannot run the local AI)'
-      : report.memoryGb !== null && report.memoryGb < 8
-        ? 'Qwen2.5 0.5B'
-        : 'Qwen2.5 1.5B'
+  const [tab, setTab] = useState<Tab>('log')
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const online = useOnline()
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10">
-      <div className="mx-auto max-w-md">
-        <h1 className="text-3xl font-bold text-slate-900">Health Scribe</h1>
-        <p className="mt-2 text-slate-600">Private, on-device health logging by voice.</p>
-
-        <div className="mt-4 inline-block rounded-lg bg-teal-700 px-3 py-2 text-sm font-medium text-white">
-          100% client-side and private. Your notes never leave this device.
-        </div>
-
-        <section className="mt-8 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-          <h2 className="text-lg font-semibold text-slate-900">Device check</h2>
-          <p className="mt-1 text-sm text-slate-500">Confirms this phone can run the local AI models.</p>
-
-          <div className="mt-3 divide-y divide-slate-100">
-            <Row label="WebGPU" status={report?.webgpu ?? 'checking'} detail={report?.gpu} />
-            <Row
-              label="Half-precision shaders"
-              status={report?.shaderF16 ?? 'checking'}
-              detail="Needed for the smaller, faster model build"
-            />
-            <div className="flex items-center justify-between gap-4 py-3">
-              <p className="font-medium text-slate-900">Device memory</p>
-              <span className="text-sm text-slate-600">
-                {report ? (report.memoryGb !== null ? `${report.memoryGb} GB or more` : 'Unknown') : 'Checking'}
-              </span>
+    <LlmProvider>
+      <div className="min-h-dvh bg-slate-50">
+        <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] backdrop-blur">
+          <div className="mx-auto flex max-w-lg items-center justify-between">
+            <div className="flex items-center gap-2">
+              <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="size-8" />
+              <h1 className="text-lg font-bold text-slate-900">Health Scribe</h1>
             </div>
-            <div className="flex items-center justify-between gap-4 py-3">
-              <p className="font-medium text-slate-900">Recommended model</p>
-              <span className="text-right text-sm text-slate-600">{report ? recommendedModel : 'Checking'}</span>
-            </div>
+            <button onClick={() => setSettingsOpen(true)} className="rounded-full p-2 text-slate-600" aria-label="Open settings">
+              <Settings className="size-5" aria-hidden />
+            </button>
           </div>
-        </section>
+          <div className="mx-auto mt-2 max-w-lg">
+            {online ? (
+              <p className="flex items-start gap-1.5 rounded-lg bg-teal-700 px-3 py-2 text-xs font-medium text-white">
+                <ShieldCheck className="size-4 shrink-0" aria-hidden />
+                100% client-side and private. Disconnect Wi-Fi to test offline mode.
+              </p>
+            ) : (
+              <p className="flex items-start gap-1.5 rounded-lg bg-slate-900 px-3 py-2 text-xs font-medium text-white">
+                <WifiOff className="size-4 shrink-0" aria-hidden />
+                You are offline. Everything still works on this device.
+              </p>
+            )}
+          </div>
+        </header>
 
-        <p className="mt-6 text-center text-xs text-slate-400">Phase 0 preview. The full app is coming next.</p>
+        <main className="mx-auto max-w-lg px-4 pb-28 pt-4">
+          <div hidden={tab !== 'log'}>
+            <LogEntryTab />
+          </div>
+          <div hidden={tab !== 'history'}>
+            <HistoryTab />
+          </div>
+          <div hidden={tab !== 'insights'}>
+            <InsightsTab />
+          </div>
+        </main>
+
+        <nav
+          className="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur"
+          aria-label="Main"
+        >
+          <div className="mx-auto grid max-w-lg grid-cols-3">
+            {TABS.map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => {
+                  setTab(id)
+                  window.scrollTo({ top: 0 })
+                }}
+                aria-current={tab === id ? 'page' : undefined}
+                className={`flex flex-col items-center gap-1 py-2.5 text-xs font-semibold ${tab === id ? 'text-teal-700' : 'text-slate-500'}`}
+              >
+                <Icon className="size-6" aria-hidden />
+                {label}
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        {settingsOpen && <SettingsSheet onClose={() => setSettingsOpen(false)} />}
       </div>
-    </main>
+    </LlmProvider>
   )
 }
