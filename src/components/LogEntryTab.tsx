@@ -2,6 +2,7 @@ import { Braces, Check, Clock, Loader2, RotateCcw, Sparkles, Undo2 } from 'lucid
 import { useCallback, useState } from 'react'
 import { deleteEntry, saveEntry } from '../lib/db'
 import { useLlm } from '../lib/llm'
+import { isFineTuned } from '../lib/models'
 import { parseNote } from '../lib/parse'
 import { isEmptyLog, type LogEntry, type ParsedLog } from '../lib/schema'
 import { LogDetails } from './LogDetails'
@@ -39,7 +40,7 @@ export function LogEntryTab() {
 
     let parsed: ParsedLog
     try {
-      parsed = await parseNote(llm.chat, text, timestamp, setStream)
+      parsed = await parseNote(llm.chat, text, timestamp, setStream, !isFineTuned(llm.modelId))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong while processing the note.')
       setPhase('editing')

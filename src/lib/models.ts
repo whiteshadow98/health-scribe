@@ -43,9 +43,27 @@ export async function detectDevice(): Promise<DeviceSupport> {
   }
 }
 
-/** WebLLM model id. Devices without half-precision shaders need the f32 build. */
+/**
+ * Qwen2.5 1.5B fine-tuned for Health Scribe (see training/). It keeps the base model's
+ * architecture and q4f16_1 format, so it runs on WebLLM's prebuilt Qwen2 WebGPU library.
+ * Set `enabled` once the weights are published.
+ */
+export const FINETUNED_MODEL = {
+  enabled: false,
+  id: 'HealthScribe-Qwen2.5-1.5B-q4f16_1-MLC',
+  url: 'https://huggingface.co/whiteshadow98/health-scribe-qwen2.5-1.5b-q4f16_1-MLC',
+  baseId: 'Qwen2.5-1.5B-Instruct-q4f16_1-MLC',
+}
+
+/** WebLLM model id. Devices without half-precision shaders need the f32 build of the generic model. */
 export function modelId(size: ModelSize, device: DeviceSupport): string {
+  if (size === '1.5B' && device.shaderF16 && FINETUNED_MODEL.enabled) return FINETUNED_MODEL.id
   return `Qwen2.5-${size}-Instruct-${device.shaderF16 ? 'q4f16_1' : 'q4f32_1'}-MLC`
+}
+
+/** The fine-tuned model already knows the output format, so it needs no in-prompt examples. */
+export function isFineTuned(id: string | null | undefined): boolean {
+  return id === FINETUNED_MODEL.id
 }
 
 export function autoModelSize(device: DeviceSupport): ModelSize {
@@ -94,6 +112,8 @@ export function resolveModelSize(device: DeviceSupport): ModelSize {
   return autoModelSize(device)
 }
 
-export function modelLabel(size: ModelSize | null) {
-  return size ? MODEL_OPTIONS[size].label : ''
+export function modelLabel(size: ModelSize | null, device?: DeviceSupport | null) {
+  if (!size) return ''
+  if (device && isFineTuned(modelId(size, device))) return 'Health Scribe 1.5B'
+  return MODEL_OPTIONS[size].label
 }

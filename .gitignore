@@ -31,3 +31,7 @@ training/.env
 training/data/raw/
 training/models/
 training/.venv/
+training/.venv-mlc/
+training/adapters/
+training/data/mlx/
+__pycache__/

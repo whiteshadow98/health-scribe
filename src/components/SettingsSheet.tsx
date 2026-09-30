@@ -3,6 +3,7 @@ import { Download, HardDrive, ShieldCheck, Trash2, Upload, X } from 'lucide-reac
 import { useEffect, useRef, useState } from 'react'
 import { db, exportBackup, importBackup, localDay, requestPersistentStorage } from '../lib/db'
 import { useLlm } from '../lib/llm'
+import { deleteCachedModel } from '../lib/webllm'
 import { MODEL_OPTIONS, getModelPreference, modelId, setModelPreference, type ModelPreference } from '../lib/models'
 
 export function SettingsSheet({ onClose }: { onClose: () => void }) {
@@ -56,10 +57,8 @@ export function SettingsSheet({ onClose }: { onClose: () => void }) {
 
   async function removeModels() {
     if (!llm.device) return
-    const { deleteModelAllInfoInCache } = await import('@mlc-ai/web-llm')
-    for (const size of ['1.5B', '0.5B'] as const) {
-      await deleteModelAllInfoInCache(modelId(size, llm.device)).catch(() => undefined)
-    }
+    const ids = new Set((['1.5B', '0.5B'] as const).flatMap((size) => [modelId(size, llm.device!), `Qwen2.5-${size}-Instruct-q4f16_1-MLC`]))
+    for (const id of ids) await deleteCachedModel(id)
     setMessage('Downloaded AI models were removed. Reload the app to download again.')
     refreshUsage()
   }

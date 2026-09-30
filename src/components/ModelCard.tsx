@@ -4,13 +4,13 @@ import { MODEL_OPTIONS, modelLabel } from '../lib/models'
 
 /** Shows the language model's status and the download button. Renders nothing once the model is ready. */
 export function ModelCard({ purpose }: { purpose: string }) {
-  const { status, size, progress, progressText, error, fellBack, load } = useLlm()
+  const { status, size, device, progress, progressText, error, fellBack, load } = useLlm()
 
   if (status === 'ready') {
     if (!fellBack) return null
     return (
       <div className="rounded-xl bg-amber-50 p-3 text-sm text-amber-900 ring-1 ring-amber-200">
-        The larger model did not fit in this phone's memory, so the app switched to {modelLabel(size)}. It is faster but a little less
+        The larger model did not fit in this phone's memory, so the app switched to {modelLabel(size, device)}. It is faster but a little less
         accurate.
       </div>
     )
@@ -67,7 +67,7 @@ export function ModelCard({ purpose }: { purpose: string }) {
           <div className="text-sm text-slate-700">
             <p className="font-semibold text-slate-900">Download the on-device AI to {purpose}</p>
             <p className="mt-1">
-              {modelLabel(size)} is about {mb} MB. It downloads once, then runs offline on this device. Wi-Fi is recommended.
+              {modelLabel(size, device)} is about {mb} MB. It downloads once, then runs offline on this device. Wi-Fi is recommended.
             </p>
             <button
               onClick={load}
@@ -99,7 +99,7 @@ export function ModelCard({ purpose }: { purpose: string }) {
       >
         <div className="h-full rounded-full bg-teal-600 transition-[width] duration-300" style={{ width: `${percent}%` }} />
       </div>
-      <p className="mt-2 text-xs text-slate-500">Keep this tab open. {modelLabel(size)} is stored on this device for next time.</p>
+      <p className="mt-2 text-xs text-slate-500">Keep this tab open. {modelLabel(size, device)} is stored on this device for next time.</p>
     </Card>
   )
 }

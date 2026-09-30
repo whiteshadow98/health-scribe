@@ -14,6 +14,7 @@ import {
 } from '../lib/analytics'
 import { db } from '../lib/db'
 import { useLlm } from '../lib/llm'
+import { isFineTuned } from '../lib/models'
 import { ModelCard } from './ModelCard'
 import { VoiceButton } from './VoiceButton'
 
@@ -49,7 +50,7 @@ export function InsightsTab() {
       setAnswer('')
       setPhase('planning')
       try {
-        const planText = await llm.chat(buildPlanMessages(text), { jsonSchema: QUERY_PLAN_JSON_SCHEMA, maxTokens: 120 })
+        const planText = await llm.chat(buildPlanMessages(text, !isFineTuned(llm.modelId)), { jsonSchema: QUERY_PLAN_JSON_SCHEMA, maxTokens: 120 })
         let raw: unknown = {}
         try {
           raw = JSON.parse(planText)

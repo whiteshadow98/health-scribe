@@ -8,6 +8,7 @@ import {
   type DeviceSupport,
   type ModelSize,
 } from './models'
+import { getAppConfig, isModelCached as isCached, webllm } from './webllm'
 
 export type LlmStatus =
   | 'checking' // Detecting WebGPU and looking for a cached model
@@ -43,13 +44,7 @@ type LlmContextValue = {
 
 const LlmContext = createContext<LlmContextValue | null>(null)
 
-// WebLLM is large, so it loads after the first paint instead of blocking it.
-const webllm = () => import('@mlc-ai/web-llm')
 
-async function isCached(id: string) {
-  const { hasModelInCache } = await webllm()
-  return hasModelInCache(id).catch(() => false)
-}
 
 export function LlmProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<LlmStatus>('checking')
@@ -93,10 +88,10 @@ export function LlmProvider({ children }: { children: ReactNode }) {
           engineRef.current.setInitProgressCallback(onProgress)
           await engineRef.current.reload(id)
         } else {
-          const { CreateWebWorkerMLCEngine } = await webllm()
+          const [{ CreateWebWorkerMLCEngine }, appConfig] = await Promise.all([webllm(), getAppConfig()])
           const worker = new Worker(new URL('../workers/llm.worker.ts', import.meta.url), { type: 'module' })
           try {
-            engineRef.current = await CreateWebWorkerMLCEngine(worker, id, { initProgressCallback: onProgress })
+            engineRef.current = await CreateWebWorkerMLCEngine(worker, id, { appConfig, initProgressCallback: onProgress })
           } catch (err) {
             worker.terminate()
             throw err

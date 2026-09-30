@@ -3,6 +3,7 @@
 // every number shown comes from here, never from the model.
 
 import type { ChatCompletionMessageParam } from '@mlc-ai/web-llm'
+import prompts from './prompts.json'
 import type { LogEntry, Severity } from './schema'
 
 export type QueryKind = 'after' | 'frequency' | 'sleep' | 'overview'
@@ -30,12 +31,7 @@ export const QUERY_PLAN_JSON_SCHEMA = JSON.stringify({
   required: ['kind', 'trigger', 'subject', 'window_hours', 'days'],
 })
 
-const PLAN_PROMPT = `You convert a question about someone's health log into a JSON query. Choose "kind":
-- "after": does one thing (trigger) lead to another (subject)? e.g. "stomach pain after coffee" -> trigger "coffee", subject "stomach pain".
-- "frequency": how often something happens or was consumed. subject is that thing, trigger is "".
-- "sleep": questions about sleep. subject is a symptom if one is mentioned, else "".
-- "overview": general questions about their health or logs. trigger and subject are "".
-Use short lowercase terms. window_hours is the time window for "after" questions (default 6). days is how far back to look ("this week" 7, "this month" 30, "last 2 weeks" 14), or 0 for all time.`
+const PLAN_PROMPT = prompts.plan_system
 
 const PLAN_EXAMPLES: [string, QueryPlan][] = [
   ['How often do I get headaches after drinking alcohol?', { kind: 'after', trigger: 'alcohol', subject: 'headache', window_hours: 12, days: 0 }],
@@ -43,9 +39,9 @@ const PLAN_EXAMPLES: [string, QueryPlan][] = [
   ['Does bad sleep make my back pain worse?', { kind: 'sleep', trigger: '', subject: 'back pain', window_hours: 6, days: 0 }],
 ]
 
-export function buildPlanMessages(question: string): ChatCompletionMessageParam[] {
+export function buildPlanMessages(question: string, fewShot = true): ChatCompletionMessageParam[] {
   const messages: ChatCompletionMessageParam[] = [{ role: 'system', content: PLAN_PROMPT }]
-  for (const [q, plan] of PLAN_EXAMPLES) {
+  for (const [q, plan] of fewShot ? PLAN_EXAMPLES : []) {
     messages.push({ role: 'user', content: q }, { role: 'assistant', content: JSON.stringify(plan) })
   }
   messages.push({ role: 'user', content: question.trim() })

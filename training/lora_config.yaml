@@ -1,0 +1,26 @@
+# LoRA fine-tuning of Qwen2.5-1.5B-Instruct on the Health Scribe tasks (mlx-lm).
+# Run: .venv/bin/python -m mlx_lm lora -c lora_config.yaml --iters <2 epochs>
+model: models/base-1.5b
+train: true
+data: data/mlx
+fine_tune_type: lora
+adapter_path: adapters/v1
+mask_prompt: true            # learn only the JSON answers, not the prompts
+num_layers: -1               # adapt every transformer layer
+batch_size: 8
+max_seq_length: 1536
+grad_checkpoint: true
+learning_rate: 2.0e-4
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  arguments: [2.0e-4, 1200, 1.0e-5]
+lora_parameters:
+  rank: 16
+  scale: 2.0
+  dropout: 0.05
+steps_per_report: 20
+steps_per_eval: 100
+val_batches: 20
+save_every: 200
+seed: 0
