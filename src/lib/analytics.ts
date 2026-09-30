@@ -4,9 +4,20 @@
 
 import type { ChatCompletionMessageParam } from '@mlc-ai/web-llm'
 import prompts from './prompts.json'
+import {
+  DAILY_TARGETS,
+  NUTRIENTS,
+  NUTRIENT_INFO,
+  averageNutrition,
+  dailyNutrition,
+  formatAmount,
+  getProfile,
+  toNutrient,
+  type Nutrient,
+} from './nutrition'
 import type { LogEntry, Severity } from './schema'
 
-export type QueryKind = 'after' | 'frequency' | 'sleep' | 'overview'
+export type QueryKind = 'after' | 'frequency' | 'sleep' | 'overview' | 'nutrition'
 
 export type QueryPlan = {
   kind: QueryKind
@@ -22,7 +33,7 @@ export type QueryPlan = {
 export const QUERY_PLAN_JSON_SCHEMA = JSON.stringify({
   type: 'object',
   properties: {
-    kind: { type: 'string', enum: ['after', 'frequency', 'sleep', 'overview'] },
+    kind: { type: 'string', enum: ['after', 'frequency', 'sleep', 'overview', 'nutrition'] },
     trigger: { type: 'string' },
     subject: { type: 'string' },
     window_hours: { type: 'integer' },
@@ -50,7 +61,7 @@ export function buildPlanMessages(question: string, fewShot = true): ChatComplet
 
 export function sanitizePlan(raw: unknown, question: string): QueryPlan {
   const obj = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>
-  const kinds: QueryKind[] = ['after', 'frequency', 'sleep', 'overview']
+  const kinds: QueryKind[] = ['after', 'frequency', 'sleep', 'overview', 'nutrition']
   const str = (v: unknown) => (typeof v === 'string' ? v.trim().toLowerCase() : '')
   const kind = kinds.includes(obj.kind as QueryKind) ? (obj.kind as QueryKind) : 'overview'
   const window = Number(obj.window_hours)
@@ -66,6 +77,7 @@ export function sanitizePlan(raw: unknown, question: string): QueryPlan {
   if (plan.kind === 'after' && (!plan.trigger || !plan.subject)) plan.kind = plan.subject || plan.trigger ? 'frequency' : 'overview'
   if (plan.kind === 'frequency' && !plan.subject) plan.subject = plan.trigger
   if (plan.kind === 'overview' && /sleep/i.test(question)) plan.kind = 'sleep'
+  if (plan.kind === 'nutrition' && !plan.subject) plan.subject = 'all'
   return plan
 }
 
@@ -256,6 +268,8 @@ export function runQuery(allEntriesList: LogEntry[], plan: QueryPlan): QueryResu
       return frequencyQuery(plan, events, days, period)
     case 'sleep':
       return sleepQuery(plan, entries, events, period)
+    case 'nutrition':
+      return nutritionQuery(plan, entries, events, period)
     default:
       return overviewQuery(plan, entries, events, days, period)
   }
@@ -413,6 +427,73 @@ function sleepQuery(plan: QueryPlan, entries: LogEntry[], events: HealthEvent[],
   }
 
   return { plan, cards, facts, matchedDays, limited: values.length < 3 }
+}
+
+function nutritionQuery(plan: QueryPlan, entries: LogEntry[], events: HealthEvent[], period: string): QueryResult {
+  const days = dailyNutrition(entries)
+  const target = DAILY_TARGETS[getProfile()]
+  const facts = [
+    `Question type: nutrition. Looking ${period}. Values are estimates from a standard food table, averaged over days with food logged.`,
+    `Days with food logged: ${days.length}.`,
+  ]
+  if (!days.length) {
+    return {
+      plan,
+      cards: [{ label: 'Food logged', value: 'None', detail: `No meals recognised ${period}` }],
+      facts: [...facts, 'No meals were logged, so nutrition cannot be estimated.'],
+      matchedDays: [],
+      limited: true,
+    }
+  }
+
+  const avg = averageNutrition(days)
+  const pctOf = (n: Nutrient) => Math.round((avg[n] / target[n]) * 100)
+  const nutrient = toNutrient(plan.subject)
+  const shown: Nutrient[] = nutrient ? [nutrient] : ['kcal', 'protein', 'fibre', 'iron']
+
+  const cards: StatCard[] = shown.map((n) => ({
+    label: `${NUTRIENT_INFO[n].label} per day`,
+    value: formatAmount(n, avg[n]),
+    detail: `${pctOf(n)}% of the ${formatAmount(n, target[n])} target`,
+  }))
+  for (const n of nutrient ? [nutrient] : NUTRIENTS) {
+    facts.push(`Average ${NUTRIENT_INFO[n].label.toLowerCase()}: ${formatAmount(n, avg[n])} per day, ${pctOf(n)}% of the daily target of ${formatAmount(n, target[n])}.`)
+  }
+
+  if (nutrient) {
+    // Which foods contributed most to this nutrient.
+    const sources = new Map<string, number>()
+    for (const d of days) for (const i of d.items) sources.set(i.food, (sources.get(i.food) ?? 0) + i.nutrition[nutrient])
+    const top = [...sources].sort((a, b) => b[1] - a[1]).slice(0, 3)
+    if (top.length) {
+      cards.push({ label: 'Top sources', value: capitalize(top[0][0]), detail: top.slice(1).map(([f]) => f).join(', ') || undefined })
+      facts.push(`Biggest sources: ${top.map(([f, v]) => `${f} (${formatAmount(nutrient, v)} total)`).join(', ')}.`)
+    }
+    const best = days.reduce((a, b) => (b.total[nutrient] > a.total[nutrient] ? b : a))
+    const low = days.filter((d) => d.total[nutrient] < target[nutrient] * 0.6).length
+    cards.push({ label: 'Low days', value: `${low} of ${days.length}`, detail: 'Under 60% of the target' })
+    facts.push(`Highest day: ${formatDay(best.day)} with ${formatAmount(nutrient, best.total[nutrient])}. Days under 60% of target: ${low} of ${days.length}.`)
+
+    if (plan.trigger) {
+      const subject = makeMatcher(plan.trigger)
+      const symptomDays = new Set(events.filter((e) => e.kind === 'symptom' && subject.test(e.text)).map((e) => e.day))
+      const withS = days.filter((d) => symptomDays.has(d.day))
+      const withoutS = days.filter((d) => !symptomDays.has(d.day))
+      const a = averageNutrition(withS)[nutrient]
+      const b = averageNutrition(withoutS)[nutrient]
+      cards.push({
+        label: `On ${plan.trigger} days`,
+        value: withS.length ? formatAmount(nutrient, a) : 'No data',
+        detail: withoutS.length ? `${formatAmount(nutrient, b)} on other days` : undefined,
+      })
+      facts.push(
+        `On days with ${plan.trigger}: average ${formatAmount(nutrient, a)} (${plural(withS.length, 'day')}). On other days: ${formatAmount(nutrient, b)} (${plural(withoutS.length, 'day')}).`,
+      )
+      return { plan, cards, facts, matchedDays: [...symptomDays].sort().reverse(), limited: withS.length < 3 || withoutS.length < 3 }
+    }
+  }
+
+  return { plan, cards, facts, matchedDays: days.map((d) => d.day).reverse(), limited: days.length < 3 }
 }
 
 function overviewQuery(plan: QueryPlan, entries: LogEntry[], events: HealthEvent[], days: string[], period: string): QueryResult {

@@ -16,12 +16,14 @@ import { db } from '../lib/db'
 import { useLlm } from '../lib/llm'
 import { isFineTuned } from '../lib/models'
 import { ModelCard } from './ModelCard'
+import { NutritionCard } from './NutritionCard'
 import { VoiceButton } from './VoiceButton'
 
 const EXAMPLES = [
-  'How often do I get stomach pain after coffee?',
+  'How often do I get acidity after chai?',
+  'Am I getting enough protein this week?',
   'How has my sleep been this week?',
-  'How many headaches did I have this month?',
+  'Do I feel tired on low iron days?',
 ]
 
 type Phase = 'idle' | 'planning' | 'summarizing' | 'done'
@@ -82,6 +84,8 @@ export function InsightsTab() {
           <CardGrid cards={glance} />
         </section>
       )}
+
+      {entries && <NutritionCard entries={entries} />}
 
       <ModelCard purpose="ask questions about your logs" />
 
@@ -228,6 +232,8 @@ function describePlan(plan: QueryPlan) {
       return `Counted ${plan.subject} across ${period}.`
     case 'sleep':
       return `Looked at your sleep${plan.subject ? ` and ${plan.subject}` : ''} across ${period}.`
+    case 'nutrition':
+      return `Estimated ${plan.subject === 'all' ? 'your nutrition' : plan.subject} from the meals you logged${plan.trigger ? `, compared with ${plan.trigger} days` : ''}, across ${period}.`
     default:
       return `Summarized ${period}.`
   }

@@ -1,5 +1,6 @@
 import { Activity, Moon, Pill, StickyNote, UtensilsCrossed, Coffee, X, Zap } from 'lucide-react'
-import type { ParsedLog, Severity } from '../lib/schema'
+import { entryNutrition, formatAmount } from '../lib/nutrition'
+import type { Intake, ParsedLog, Severity } from '../lib/schema'
 
 type ListKey = 'intake' | 'activities' | 'symptoms'
 
@@ -49,13 +50,15 @@ export function LogDetails({ log, onRemove }: Props) {
                 onRemove={onRemove && (() => onRemove('intake', i))}
               >
                 <Icon className="mr-1 inline size-3.5 align-[-2px]" aria-label={item.category} />
-                <span className="font-medium">{item.item}</span>
+                <span className="font-medium">{describeIntake(item)}</span>
                 {item.time && <span className="opacity-75"> · {formatTime(item.time)}</span>}
               </Chip>
             )
           })}
         </Section>
       )}
+
+      {log.intake.length > 0 && <NutritionLine log={log} />}
 
       {log.activities.length > 0 && (
         <Section icon={<Activity className="size-4" />} title="Activity">
@@ -86,6 +89,28 @@ export function LogDetails({ log, onRemove }: Props) {
       )}
     </div>
   )
+}
+
+function NutritionLine({ log }: { log: ParsedLog }) {
+  const { total, items, unmatched } = entryNutrition(log)
+  // Nothing worth showing for water, black tea and the like.
+  if (!items.length || total.kcal < 5) return null
+  return (
+    <p className="-mt-1 text-xs text-slate-500">
+      About {formatAmount('kcal', total.kcal)} · {formatAmount('protein', total.protein)} protein · {formatAmount('carbs', total.carbs)}{' '}
+      carbs · {formatAmount('fat', total.fat)} fat
+      {unmatched.length > 0 && <span> (not counted: {unmatched.join(', ')})</span>}
+    </p>
+  )
+}
+
+/** "2 roti", "1 bowl dal", "200 g paneer", or just the item when no amount was given. */
+function describeIntake(item: Intake) {
+  if (item.quantity === null) return item.item
+  const q = item.quantity
+  if (!item.unit || item.unit === 'serving') return item.unit === 'serving' && q !== 1 ? `${item.item} ×${q}` : `${q} ${item.item}`
+  const unit = ['g', 'ml', 'l'].includes(item.unit) || q === 1 ? item.unit : `${item.unit}${item.unit.endsWith('s') ? 'es' : 's'}`
+  return `${q} ${unit} ${item.item}`
 }
 
 function Section({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {

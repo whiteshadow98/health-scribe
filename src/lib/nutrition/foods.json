@@ -1,0 +1,3257 @@
+{
+ "_about": "Approximate nutrition per typical serving, compiled for Health Scribe from typical Indian (IFCT/NIN-style) and USDA values for common household portions. Estimates for tracking trends, not clinical use. Columns: name, aliases, serving unit, grams per serving, kcal, protein g, carbs g, fat g, fibre g, iron mg, calcium mg, vitamin B12 mcg.",
+ "columns": [
+  "name",
+  "aliases",
+  "unit",
+  "grams",
+  "kcal",
+  "protein",
+  "carbs",
+  "fat",
+  "fibre",
+  "iron",
+  "calcium",
+  "b12"
+ ],
+ "foods": [
+  [
+   "roti",
+   [
+    "chapati",
+    "chapathi",
+    "phulka",
+    "fulka",
+    "rotis",
+    "chapatis"
+   ],
+   "piece",
+   40,
+   110,
+   3.5,
+   20,
+   2,
+   3,
+   1.2,
+   12,
+   0
+  ],
+  [
+   "multigrain roti",
+   [
+    "multigrain chapati"
+   ],
+   "piece",
+   40,
+   110,
+   4,
+   19,
+   2.5,
+   3.5,
+   1.5,
+   20,
+   0
+  ],
+  [
+   "bajra roti",
+   [
+    "bajre ki roti",
+    "bajra rotla"
+   ],
+   "piece",
+   50,
+   150,
+   4,
+   25,
+   4,
+   4,
+   2.5,
+   15,
+   0
+  ],
+  [
+   "makki di roti",
+   [
+    "makki roti",
+    "makki ki roti"
+   ],
+   "piece",
+   60,
+   180,
+   4,
+   28,
+   6,
+   3.5,
+   1.2,
+   8,
+   0
+  ],
+  [
+   "missi roti",
+   [],
+   "piece",
+   50,
+   150,
+   5.5,
+   22,
+   4.5,
+   4,
+   2,
+   25,
+   0
+  ],
+  [
+   "mandua roti",
+   [
+    "ragi roti",
+    "nachni roti"
+   ],
+   "piece",
+   50,
+   140,
+   3.5,
+   27,
+   2,
+   4,
+   2.2,
+   150,
+   0
+  ],
+  [
+   "bhakri",
+   [
+    "jowar bhakri",
+    "jowar roti",
+    "bhakar"
+   ],
+   "piece",
+   50,
+   140,
+   4.5,
+   28,
+   1.5,
+   3.5,
+   2,
+   12,
+   0
+  ],
+  [
+   "thepla",
+   [
+    "methi thepla"
+   ],
+   "piece",
+   40,
+   130,
+   3.5,
+   17,
+   5.5,
+   2.5,
+   1.2,
+   30,
+   0
+  ],
+  [
+   "paratha",
+   [
+    "parantha",
+    "parota",
+    "parathe",
+    "parathas"
+   ],
+   "piece",
+   80,
+   260,
+   5.5,
+   34,
+   11,
+   4,
+   1.8,
+   20,
+   0
+  ],
+  [
+   "aloo paratha",
+   [
+    "aloo parantha",
+    "aloo parota"
+   ],
+   "piece",
+   120,
+   300,
+   6,
+   42,
+   12,
+   5,
+   2,
+   25,
+   0
+  ],
+  [
+   "paneer paratha",
+   [],
+   "piece",
+   120,
+   330,
+   11,
+   36,
+   15,
+   4,
+   1.8,
+   150,
+   0.2
+  ],
+  [
+   "methi paratha",
+   [],
+   "piece",
+   90,
+   250,
+   6,
+   33,
+   10,
+   4.5,
+   2.5,
+   60,
+   0
+  ],
+  [
+   "puri",
+   [
+    "poori",
+    "luchi",
+    "puris",
+    "pooris"
+   ],
+   "piece",
+   25,
+   100,
+   2,
+   12,
+   5,
+   1,
+   0.6,
+   5,
+   0
+  ],
+  [
+   "kuttu puri",
+   [
+    "kuttu ki puri"
+   ],
+   "piece",
+   30,
+   110,
+   2.5,
+   14,
+   5,
+   1.5,
+   1,
+   8,
+   0
+  ],
+  [
+   "bhature",
+   [
+    "bhatura"
+   ],
+   "piece",
+   80,
+   290,
+   6,
+   38,
+   13,
+   1.5,
+   1.5,
+   20,
+   0
+  ],
+  [
+   "naan",
+   [
+    "kulcha",
+    "tandoori roti"
+   ],
+   "piece",
+   90,
+   260,
+   8,
+   45,
+   5,
+   2,
+   2.5,
+   40,
+   0
+  ],
+  [
+   "butter naan",
+   [
+    "garlic naan"
+   ],
+   "piece",
+   100,
+   320,
+   8.5,
+   46,
+   11,
+   2,
+   2.5,
+   45,
+   0.1
+  ],
+  [
+   "parotta",
+   [
+    "kerala parotta",
+    "malabar parotta"
+   ],
+   "piece",
+   90,
+   290,
+   6,
+   38,
+   13,
+   1.5,
+   1.5,
+   20,
+   0
+  ],
+  [
+   "litti",
+   [
+    "litti chokha",
+    "bafla",
+    "baati"
+   ],
+   "piece",
+   80,
+   230,
+   6.5,
+   32,
+   9,
+   5,
+   2,
+   30,
+   0
+  ],
+  [
+   "bread",
+   [
+    "white bread",
+    "brown bread",
+    "toast",
+    "multigrain toast",
+    "bread toast",
+    "bread butter"
+   ],
+   "slice",
+   30,
+   80,
+   2.7,
+   15,
+   1,
+   1.5,
+   0.8,
+   30,
+   0
+  ],
+  [
+   "pav",
+   [
+    "bun",
+    "ladi pav",
+    "pao",
+    "poi",
+    "girda",
+    "bun maska"
+   ],
+   "piece",
+   40,
+   110,
+   3.5,
+   21,
+   1.5,
+   1,
+   1,
+   25,
+   0
+  ],
+  [
+   "bagel",
+   [],
+   "piece",
+   100,
+   270,
+   10,
+   53,
+   1.5,
+   2.5,
+   3.5,
+   20,
+   0
+  ],
+  [
+   "croissant",
+   [],
+   "piece",
+   60,
+   240,
+   5,
+   26,
+   12,
+   1.5,
+   1.2,
+   20,
+   0.1
+  ],
+  [
+   "rice",
+   [
+    "chawal",
+    "bhat",
+    "bhaat",
+    "steamed rice",
+    "plain rice",
+    "brown rice"
+   ],
+   "bowl",
+   150,
+   195,
+   4,
+   43,
+   0.4,
+   0.6,
+   0.3,
+   15,
+   0
+  ],
+  [
+   "jeera rice",
+   [
+    "pulao",
+    "veg pulao"
+   ],
+   "bowl",
+   150,
+   230,
+   4,
+   42,
+   5,
+   1,
+   0.6,
+   20,
+   0
+  ],
+  [
+   "curd rice",
+   [
+    "dahi chawal",
+    "thayir sadam"
+   ],
+   "bowl",
+   200,
+   250,
+   7,
+   40,
+   6,
+   1,
+   0.5,
+   150,
+   0.3
+  ],
+  [
+   "lemon rice",
+   [
+    "chitranna",
+    "pulihora",
+    "tamarind rice",
+    "gongura rice"
+   ],
+   "bowl",
+   180,
+   280,
+   5,
+   45,
+   9,
+   1.5,
+   1,
+   20,
+   0
+  ],
+  [
+   "biryani",
+   [
+    "chicken biryani",
+    "mutton biryani",
+    "hyderabadi biryani",
+    "irani biryani"
+   ],
+   "plate",
+   300,
+   500,
+   22,
+   60,
+   18,
+   3,
+   2.5,
+   60,
+   0.5
+  ],
+  [
+   "veg biryani",
+   [
+    "egg biryani"
+   ],
+   "plate",
+   300,
+   420,
+   9,
+   65,
+   13,
+   4,
+   2,
+   50,
+   0
+  ],
+  [
+   "khichdi",
+   [
+    "dal khichdi",
+    "khichuri"
+   ],
+   "bowl",
+   200,
+   240,
+   9,
+   40,
+   5,
+   4,
+   2,
+   30,
+   0
+  ],
+  [
+   "sambar rice",
+   [
+    "bisi bele bath",
+    "dal rice",
+    "rice dalma",
+    "dal chawal"
+   ],
+   "plate",
+   250,
+   320,
+   10,
+   55,
+   7,
+   5,
+   2,
+   50,
+   0
+  ],
+  [
+   "pongal",
+   [
+    "ven pongal",
+    "khara pongal"
+   ],
+   "bowl",
+   200,
+   280,
+   8,
+   40,
+   10,
+   2,
+   1.5,
+   30,
+   0
+  ],
+  [
+   "sweet pongal",
+   [
+    "chakkara pongal"
+   ],
+   "bowl",
+   150,
+   330,
+   5,
+   55,
+   10,
+   1.5,
+   1.5,
+   40,
+   0
+  ],
+  [
+   "kanji",
+   [
+    "rice kanji",
+    "congee",
+    "pakhala",
+    "pakhala bhata"
+   ],
+   "bowl",
+   250,
+   150,
+   3,
+   32,
+   0.5,
+   0.5,
+   0.3,
+   10,
+   0
+  ],
+  [
+   "ragi mudde",
+   [
+    "ragi ball"
+   ],
+   "piece",
+   150,
+   230,
+   5,
+   48,
+   1.5,
+   5,
+   2,
+   200,
+   0
+  ],
+  [
+   "ragi porridge",
+   [
+    "ragi malt",
+    "ragi kanji"
+   ],
+   "bowl",
+   200,
+   180,
+   5,
+   30,
+   4,
+   3,
+   1.8,
+   200,
+   0.3
+  ],
+  [
+   "oats",
+   [
+    "oatmeal",
+    "porridge",
+    "overnight oats"
+   ],
+   "bowl",
+   200,
+   200,
+   7,
+   32,
+   5,
+   4.5,
+   2,
+   100,
+   0.3
+  ],
+  [
+   "oats upma",
+   [],
+   "bowl",
+   180,
+   220,
+   7,
+   32,
+   7,
+   5,
+   2,
+   30,
+   0
+  ],
+  [
+   "dalia",
+   [
+    "daliya",
+    "broken wheat"
+   ],
+   "bowl",
+   200,
+   200,
+   7,
+   38,
+   3,
+   5,
+   2,
+   40,
+   0
+  ],
+  [
+   "muesli",
+   [
+    "granola",
+    "cereal",
+    "cornflakes"
+   ],
+   "bowl",
+   60,
+   240,
+   6,
+   40,
+   6,
+   4,
+   3,
+   40,
+   0.3
+  ],
+  [
+   "pasta",
+   [
+    "spaghetti",
+    "mac and cheese",
+    "noodles",
+    "pancit",
+    "pad thai",
+    "laksa"
+   ],
+   "plate",
+   250,
+   400,
+   13,
+   60,
+   12,
+   3,
+   2,
+   60,
+   0.2
+  ],
+  [
+   "maggi",
+   [
+    "instant noodles",
+    "ramen"
+   ],
+   "packet",
+   70,
+   310,
+   6.5,
+   42,
+   13,
+   2,
+   2.5,
+   20,
+   0
+  ],
+  [
+   "chowmein",
+   [
+    "hakka noodles",
+    "chow mein"
+   ],
+   "plate",
+   250,
+   420,
+   9,
+   60,
+   16,
+   3,
+   2,
+   30,
+   0
+  ],
+  [
+   "pizza",
+   [
+    "pepperoni pizza",
+    "domino's pizza"
+   ],
+   "slice",
+   110,
+   285,
+   12,
+   36,
+   10,
+   2.5,
+   2.5,
+   180,
+   0.4
+  ],
+  [
+   "burger",
+   [
+    "cheeseburger",
+    "veg burger",
+    "chicken burger",
+    "mcchicken",
+    "whopper",
+    "big mac",
+    "mcaloo tikki",
+    "double cheeseburger"
+   ],
+   "piece",
+   200,
+   500,
+   22,
+   45,
+   25,
+   3,
+   3.5,
+   150,
+   1
+  ],
+  [
+   "sandwich",
+   [
+    "turkey sandwich",
+    "chicken sandwich",
+    "tuna sandwich"
+   ],
+   "piece",
+   150,
+   300,
+   12,
+   35,
+   12,
+   3,
+   2.5,
+   100,
+   0.3
+  ],
+  [
+   "wrap",
+   [
+    "burrito",
+    "roll",
+    "kathi roll",
+    "egg roll",
+    "chicken roll",
+    "frankie",
+    "shawarma",
+    "chicken shawarma"
+   ],
+   "piece",
+   200,
+   420,
+   18,
+   45,
+   17,
+   4,
+   3,
+   100,
+   0.5
+  ],
+  [
+   "idli",
+   [
+    "idly",
+    "idlis",
+    "idlys"
+   ],
+   "piece",
+   40,
+   60,
+   2,
+   12,
+   0.3,
+   0.6,
+   0.4,
+   8,
+   0
+  ],
+  [
+   "dosa",
+   [
+    "plain dosa",
+    "neer dosa"
+   ],
+   "piece",
+   100,
+   170,
+   4,
+   28,
+   4.5,
+   1.5,
+   1,
+   15,
+   0
+  ],
+  [
+   "masala dosa",
+   [],
+   "piece",
+   200,
+   350,
+   7,
+   50,
+   13,
+   4,
+   2,
+   40,
+   0
+  ],
+  [
+   "ragi dosa",
+   [],
+   "piece",
+   80,
+   150,
+   3.5,
+   25,
+   4,
+   3,
+   1.5,
+   120,
+   0
+  ],
+  [
+   "pesarattu",
+   [
+    "moong dosa"
+   ],
+   "piece",
+   100,
+   170,
+   9,
+   24,
+   4,
+   4,
+   2,
+   40,
+   0
+  ],
+  [
+   "vada",
+   [
+    "medu vada",
+    "vade",
+    "bara",
+    "aloo bonda"
+   ],
+   "piece",
+   50,
+   150,
+   4,
+   14,
+   9,
+   2,
+   1,
+   15,
+   0
+  ],
+  [
+   "appam",
+   [
+    "idiyappam",
+    "string hoppers"
+   ],
+   "piece",
+   60,
+   110,
+   2,
+   22,
+   1.5,
+   0.5,
+   0.4,
+   10,
+   0
+  ],
+  [
+   "puttu",
+   [],
+   "piece",
+   120,
+   220,
+   4,
+   45,
+   3,
+   3,
+   0.8,
+   10,
+   0
+  ],
+  [
+   "upma",
+   [
+    "kesari bath",
+    "khara bath",
+    "rava upma"
+   ],
+   "bowl",
+   180,
+   250,
+   6,
+   35,
+   9,
+   3,
+   1.5,
+   25,
+   0
+  ],
+  [
+   "poha",
+   [
+    "kanda poha",
+    "tarri poha",
+    "chivda"
+   ],
+   "plate",
+   150,
+   250,
+   5,
+   40,
+   8,
+   2,
+   3,
+   20,
+   0
+  ],
+  [
+   "besan chilla",
+   [
+    "cheela",
+    "chila",
+    "moong dal chilla"
+   ],
+   "piece",
+   80,
+   150,
+   7,
+   16,
+   6,
+   3,
+   1.8,
+   30,
+   0
+  ],
+  [
+   "sabudana khichdi",
+   [],
+   "bowl",
+   200,
+   380,
+   5,
+   60,
+   13,
+   2,
+   1,
+   25,
+   0
+  ],
+  [
+   "sabudana vada",
+   [],
+   "piece",
+   50,
+   170,
+   2,
+   22,
+   8,
+   1,
+   0.5,
+   10,
+   0
+  ],
+  [
+   "thalipeeth",
+   [],
+   "piece",
+   80,
+   200,
+   6,
+   28,
+   7,
+   5,
+   2.5,
+   40,
+   0
+  ],
+  [
+   "dhokla",
+   [
+    "khaman"
+   ],
+   "piece",
+   30,
+   50,
+   2,
+   7,
+   1.5,
+   1,
+   0.5,
+   10,
+   0
+  ],
+  [
+   "khandvi",
+   [],
+   "piece",
+   20,
+   30,
+   1.5,
+   3,
+   1.5,
+   0.5,
+   0.3,
+   10,
+   0
+  ],
+  [
+   "misal pav",
+   [
+    "misal"
+   ],
+   "plate",
+   350,
+   500,
+   18,
+   60,
+   20,
+   12,
+   5,
+   80,
+   0
+  ],
+  [
+   "pav bhaji",
+   [],
+   "plate",
+   350,
+   550,
+   12,
+   70,
+   25,
+   8,
+   3.5,
+   80,
+   0.1
+  ],
+  [
+   "vada pav",
+   [],
+   "piece",
+   150,
+   300,
+   6,
+   42,
+   12,
+   3,
+   2,
+   40,
+   0
+  ],
+  [
+   "chole bhature",
+   [],
+   "plate",
+   400,
+   750,
+   20,
+   90,
+   35,
+   12,
+   5,
+   100,
+   0
+  ],
+  [
+   "chole kulche",
+   [
+    "chole puri"
+   ],
+   "plate",
+   350,
+   550,
+   18,
+   80,
+   16,
+   12,
+   5,
+   90,
+   0
+  ],
+  [
+   "rajma chawal",
+   [],
+   "plate",
+   350,
+   450,
+   15,
+   75,
+   8,
+   10,
+   4,
+   60,
+   0
+  ],
+  [
+   "kadhi chawal",
+   [],
+   "plate",
+   350,
+   420,
+   11,
+   65,
+   12,
+   3,
+   1.5,
+   150,
+   0.3
+  ],
+  [
+   "dal baati churma",
+   [
+    "dal bafla"
+   ],
+   "plate",
+   350,
+   850,
+   20,
+   100,
+   40,
+   10,
+   5,
+   80,
+   0
+  ],
+  [
+   "litti chokha",
+   [],
+   "plate",
+   250,
+   450,
+   13,
+   60,
+   17,
+   9,
+   3.5,
+   60,
+   0
+  ],
+  [
+   "kothu parotta",
+   [],
+   "plate",
+   300,
+   550,
+   18,
+   60,
+   26,
+   3,
+   3,
+   60,
+   0.5
+  ],
+  [
+   "dal",
+   [
+    "daal",
+    "dal tadka",
+    "moong dal",
+    "toor dal",
+    "arhar dal",
+    "masoor dal",
+    "dalma",
+    "palak dal",
+    "pitla",
+    "pithla",
+    "zunka",
+    "payar"
+   ],
+   "bowl",
+   150,
+   150,
+   9,
+   20,
+   4,
+   5,
+   2.2,
+   30,
+   0
+  ],
+  [
+   "dal makhani",
+   [
+    "dal makhni"
+   ],
+   "bowl",
+   150,
+   250,
+   10,
+   22,
+   13,
+   7,
+   3,
+   60,
+   0.1
+  ],
+  [
+   "rajma",
+   [],
+   "bowl",
+   150,
+   200,
+   10,
+   28,
+   5,
+   8,
+   3,
+   50,
+   0
+  ],
+  [
+   "chole",
+   [
+    "chana masala",
+    "kadala curry",
+    "usal",
+    "chana tonak",
+    "sundal",
+    "chana"
+   ],
+   "bowl",
+   150,
+   220,
+   10,
+   30,
+   7,
+   9,
+   3,
+   60,
+   0
+  ],
+  [
+   "sambar",
+   [
+    "sambaar",
+    "saaru",
+    "salna"
+   ],
+   "bowl",
+   150,
+   110,
+   5,
+   16,
+   3,
+   4,
+   1.5,
+   40,
+   0
+  ],
+  [
+   "rasam",
+   [],
+   "bowl",
+   150,
+   60,
+   2,
+   9,
+   2,
+   1,
+   0.8,
+   20,
+   0
+  ],
+  [
+   "kadhi",
+   [
+    "majjiga pulusu"
+   ],
+   "bowl",
+   150,
+   150,
+   5,
+   12,
+   9,
+   1,
+   0.5,
+   120,
+   0.2
+  ],
+  [
+   "sabzi",
+   [
+    "sabji",
+    "mixed veg",
+    "aloo sabzi",
+    "aloo gobhi",
+    "aloo gobi",
+    "bhindi",
+    "lauki",
+    "karela sabzi",
+    "aloo matar",
+    "baingan",
+    "bharli vangi",
+    "avial",
+    "poriyal",
+    "thoran",
+    "aloo dum",
+    "aloo bhaji",
+    "bhaji",
+    "vegetable kurma",
+    "aloo posto",
+    "saga bhaja",
+    "khar",
+    "veggies",
+    "stew",
+    "potato fry",
+    "aloo",
+    "bhutte ka kees"
+   ],
+   "bowl",
+   150,
+   130,
+   3,
+   15,
+   7,
+   4,
+   1.2,
+   40,
+   0
+  ],
+  [
+   "palak paneer",
+   [
+    "saag paneer"
+   ],
+   "bowl",
+   150,
+   250,
+   11,
+   9,
+   19,
+   3,
+   2.5,
+   300,
+   0.3
+  ],
+  [
+   "sarson ka saag",
+   [
+    "sarson da saag"
+   ],
+   "bowl",
+   150,
+   180,
+   5,
+   10,
+   13,
+   4,
+   3,
+   200,
+   0
+  ],
+  [
+   "paneer",
+   [
+    "cottage cheese"
+   ],
+   "piece",
+   100,
+   265,
+   18,
+   1.2,
+   21,
+   0,
+   0.2,
+   480,
+   0.6
+  ],
+  [
+   "paneer tikka",
+   [
+    "paneer bhurji",
+    "paneer butter masala",
+    "shahi paneer",
+    "paneer sabzi"
+   ],
+   "bowl",
+   150,
+   330,
+   17,
+   10,
+   25,
+   1.5,
+   1,
+   400,
+   0.5
+  ],
+  [
+   "egg",
+   [
+    "eggs",
+    "anda",
+    "boiled egg",
+    "boiled eggs",
+    "omelette",
+    "ros omelette",
+    "half boiled egg",
+    "hard boiled eggs",
+    "soft boiled eggs",
+    "scrambled eggs"
+   ],
+   "piece",
+   50,
+   75,
+   6.3,
+   0.5,
+   5,
+   0,
+   0.9,
+   28,
+   0.5
+  ],
+  [
+   "egg whites",
+   [
+    "egg white"
+   ],
+   "piece",
+   33,
+   17,
+   3.6,
+   0.2,
+   0,
+   0,
+   0,
+   2,
+   0
+  ],
+  [
+   "egg curry",
+   [
+    "egg bhurji",
+    "egg roast"
+   ],
+   "bowl",
+   150,
+   250,
+   15,
+   6,
+   18,
+   1.5,
+   2,
+   60,
+   1
+  ],
+  [
+   "chicken curry",
+   [
+    "butter chicken",
+    "chicken sukka",
+    "kadai chicken",
+    "chicken 65",
+    "chilli chicken",
+    "chicken cafreal",
+    "saoji chicken",
+    "spicy chicken curry"
+   ],
+   "bowl",
+   150,
+   280,
+   22,
+   8,
+   18,
+   1.5,
+   1.5,
+   40,
+   0.4
+  ],
+  [
+   "chicken breast",
+   [
+    "grilled chicken",
+    "tandoori chicken"
+   ],
+   "piece",
+   120,
+   200,
+   37,
+   0,
+   4.5,
+   0,
+   1,
+   15,
+   0.4
+  ],
+  [
+   "fried chicken",
+   [
+    "kfc",
+    "chickenjoy",
+    "chicken wings",
+    "wings"
+   ],
+   "piece",
+   150,
+   400,
+   30,
+   15,
+   24,
+   0.5,
+   1.5,
+   30,
+   0.4
+  ],
+  [
+   "fish curry",
+   [
+    "macher jhol",
+    "masor tenga",
+    "shorshe ilish",
+    "fish curry rice",
+    "fish"
+   ],
+   "bowl",
+   150,
+   200,
+   18,
+   6,
+   11,
+   1,
+   1.2,
+   60,
+   2
+  ],
+  [
+   "fish fry",
+   [
+    "fried fish",
+    "maach bhaja"
+   ],
+   "piece",
+   100,
+   220,
+   20,
+   6,
+   13,
+   0.5,
+   1,
+   50,
+   2
+  ],
+  [
+   "mutton curry",
+   [
+    "rogan josh",
+    "mutton",
+    "keema"
+   ],
+   "bowl",
+   150,
+   320,
+   22,
+   6,
+   23,
+   1,
+   2.5,
+   30,
+   2
+  ],
+  [
+   "haleem",
+   [],
+   "bowl",
+   250,
+   450,
+   25,
+   35,
+   22,
+   5,
+   4,
+   60,
+   1.5
+  ],
+  [
+   "prawn curry",
+   [
+    "prawn curry rice"
+   ],
+   "bowl",
+   150,
+   220,
+   20,
+   7,
+   12,
+   1,
+   2,
+   90,
+   1
+  ],
+  [
+   "salmon",
+   [
+    "grilled salmon"
+   ],
+   "piece",
+   120,
+   250,
+   25,
+   0,
+   15,
+   0,
+   0.5,
+   15,
+   3.5
+  ],
+  [
+   "soya chunks",
+   [
+    "soya"
+   ],
+   "bowl",
+   50,
+   170,
+   26,
+   17,
+   0.5,
+   6.5,
+   10,
+   175,
+   0
+  ],
+  [
+   "tofu",
+   [
+    "scrambled tofu"
+   ],
+   "bowl",
+   150,
+   180,
+   18,
+   5,
+   11,
+   1.5,
+   3,
+   350,
+   0
+  ],
+  [
+   "sprouts",
+   [
+    "sprouts salad",
+    "moong sprouts"
+   ],
+   "bowl",
+   100,
+   110,
+   8,
+   18,
+   1,
+   4,
+   1.5,
+   30,
+   0
+  ],
+  [
+   "salad",
+   [
+    "kachumber",
+    "green salad",
+    "quinoa salad",
+    "chicken salad",
+    "tuna salad",
+    "onion",
+    "carrots"
+   ],
+   "bowl",
+   150,
+   90,
+   3,
+   12,
+   3,
+   3.5,
+   0.8,
+   40,
+   0
+  ],
+  [
+   "samosa",
+   [
+    "samose",
+    "samosas",
+    "singara"
+   ],
+   "piece",
+   100,
+   260,
+   4.5,
+   30,
+   14,
+   2.5,
+   1.5,
+   20,
+   0
+  ],
+  [
+   "kachori",
+   [
+    "pyaaz kachori",
+    "khasta kachori"
+   ],
+   "piece",
+   80,
+   290,
+   5,
+   30,
+   17,
+   2.5,
+   1.5,
+   20,
+   0
+  ],
+  [
+   "pakode",
+   [
+    "pakora",
+    "bhajiya",
+    "bajji",
+    "mirchi bajji",
+    "mirchi bada",
+    "punugulu",
+    "goli baje",
+    "bread pakora",
+    "pazham pori"
+   ],
+   "plate",
+   100,
+   300,
+   7,
+   25,
+   19,
+   4,
+   2,
+   40,
+   0
+  ],
+  [
+   "pani puri",
+   [
+    "golgappe",
+    "puchka",
+    "phuchka"
+   ],
+   "plate",
+   120,
+   200,
+   4,
+   32,
+   7,
+   3,
+   1.5,
+   20,
+   0
+  ],
+  [
+   "bhel puri",
+   [
+    "bhel",
+    "churumuri",
+    "jhal muri",
+    "muri"
+   ],
+   "plate",
+   150,
+   280,
+   6,
+   40,
+   11,
+   4,
+   3,
+   30,
+   0
+  ],
+  [
+   "chaat",
+   [
+    "sev puri",
+    "dahi puri",
+    "papdi chaat",
+    "samosa chaat",
+    "tamatar chaat",
+    "chana chaat",
+    "dahi bade",
+    "fruit chaat"
+   ],
+   "plate",
+   150,
+   300,
+   7,
+   38,
+   14,
+   4,
+   2,
+   80,
+   0.1
+  ],
+  [
+   "momos",
+   [
+    "momo",
+    "chicken momos",
+    "veg momos"
+   ],
+   "plate",
+   180,
+   280,
+   12,
+   40,
+   8,
+   2,
+   2,
+   30,
+   0.2
+  ],
+  [
+   "aloo tikki",
+   [],
+   "piece",
+   70,
+   150,
+   2.5,
+   20,
+   7,
+   2,
+   0.8,
+   10,
+   0
+  ],
+  [
+   "dabeli",
+   [],
+   "piece",
+   120,
+   280,
+   6,
+   40,
+   11,
+   3,
+   1.5,
+   30,
+   0
+  ],
+  [
+   "fafda",
+   [],
+   "plate",
+   60,
+   300,
+   8,
+   30,
+   17,
+   4,
+   2,
+   30,
+   0
+  ],
+  [
+   "khakhra",
+   [],
+   "piece",
+   20,
+   80,
+   2.5,
+   13,
+   2,
+   2,
+   0.8,
+   10,
+   0
+  ],
+  [
+   "gobi manchurian",
+   [
+    "manchurian"
+   ],
+   "plate",
+   200,
+   380,
+   6,
+   40,
+   22,
+   4,
+   1.5,
+   40,
+   0
+  ],
+  [
+   "namkeen",
+   [
+    "mixture",
+    "sev",
+    "bhujia",
+    "aloo bhujia",
+    "farsan",
+    "kurkure",
+    "chips",
+    "lays",
+    "pringles",
+    "banana chips",
+    "nachos"
+   ],
+   "packet",
+   30,
+   160,
+   3,
+   16,
+   10,
+   1,
+   0.6,
+   10,
+   0
+  ],
+  [
+   "makhana",
+   [
+    "roasted makhana",
+    "fox nuts"
+   ],
+   "bowl",
+   25,
+   90,
+   2.5,
+   18,
+   1,
+   1.5,
+   0.4,
+   15,
+   0
+  ],
+  [
+   "biscuit",
+   [
+    "biscuits",
+    "marie",
+    "marie biscuits",
+    "parle-g",
+    "good day biscuits",
+    "digestive biscuits",
+    "britannia biscuits",
+    "arrowroot biscuits",
+    "osmania biscuits",
+    "rusk",
+    "khari",
+    "cookie",
+    "cookies"
+   ],
+   "piece",
+   8,
+   38,
+   0.6,
+   6,
+   1.3,
+   0.2,
+   0.2,
+   3,
+   0
+  ],
+  [
+   "fries",
+   [
+    "french fries"
+   ],
+   "serving",
+   120,
+   370,
+   4,
+   48,
+   18,
+   4,
+   1,
+   20,
+   0
+  ],
+  [
+   "donut",
+   [
+    "doughnut"
+   ],
+   "piece",
+   60,
+   250,
+   3,
+   30,
+   14,
+   1,
+   1,
+   25,
+   0.1
+  ],
+  [
+   "cake",
+   [
+    "plum cake",
+    "cheesecake",
+    "pastry",
+    "banana bread",
+    "blueberry muffin",
+    "muffin",
+    "bebinca"
+   ],
+   "slice",
+   80,
+   300,
+   4,
+   40,
+   14,
+   1,
+   1,
+   50,
+   0.2
+  ],
+  [
+   "chocolate",
+   [
+    "dark chocolate",
+    "kitkat"
+   ],
+   "piece",
+   25,
+   135,
+   1.8,
+   15,
+   7.5,
+   1.5,
+   1.5,
+   30,
+   0.1
+  ],
+  [
+   "ice cream",
+   [
+    "frozen yogurt"
+   ],
+   "cup",
+   100,
+   210,
+   3.5,
+   24,
+   11,
+   0.5,
+   0.2,
+   120,
+   0.3
+  ],
+  [
+   "protein bar",
+   [
+    "granola bar",
+    "muesli bar",
+    "energy bar"
+   ],
+   "piece",
+   50,
+   200,
+   10,
+   22,
+   7,
+   3,
+   1.5,
+   80,
+   0.3
+  ],
+  [
+   "energy gel",
+   [
+    "gel"
+   ],
+   "piece",
+   32,
+   100,
+   0,
+   25,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   "peanut butter toast",
+   [
+    "pb toast",
+    "peanut butter banana toast",
+    "avocado toast"
+   ],
+   "slice",
+   60,
+   200,
+   7,
+   18,
+   11,
+   3,
+   1,
+   30,
+   0
+  ],
+  [
+   "gulab jamun",
+   [],
+   "piece",
+   40,
+   150,
+   2,
+   22,
+   6,
+   0.2,
+   0.3,
+   30,
+   0.1
+  ],
+  [
+   "jalebi",
+   [],
+   "piece",
+   30,
+   130,
+   1,
+   20,
+   5,
+   0.2,
+   0.3,
+   5,
+   0
+  ],
+  [
+   "rasgulla",
+   [
+    "rosogolla",
+    "rosogollas"
+   ],
+   "piece",
+   50,
+   110,
+   2.5,
+   22,
+   1.5,
+   0,
+   0.1,
+   40,
+   0.1
+  ],
+  [
+   "ladoo",
+   [
+    "laddu",
+    "shengdana ladoo",
+    "besan ladoo",
+    "til ladoo",
+    "tilgul ladoo",
+    "thekua"
+   ],
+   "piece",
+   40,
+   180,
+   3,
+   22,
+   9,
+   1,
+   0.8,
+   20,
+   0
+  ],
+  [
+   "halwa",
+   [
+    "gajar ka halwa",
+    "gajar ka halva",
+    "sooji halwa",
+    "kesari"
+   ],
+   "bowl",
+   100,
+   280,
+   4.5,
+   35,
+   14,
+   2,
+   0.8,
+   120,
+   0.2
+  ],
+  [
+   "kheer",
+   [
+    "payasam",
+    "phirni",
+    "sheer khurma",
+    "makhana kheer",
+    "sewai",
+    "ulundu kali"
+   ],
+   "bowl",
+   150,
+   250,
+   6,
+   38,
+   8,
+   0.5,
+   0.4,
+   180,
+   0.4
+  ],
+  [
+   "mishti doi",
+   [
+    "shrikhand"
+   ],
+   "bowl",
+   100,
+   180,
+   5,
+   28,
+   5,
+   0,
+   0.1,
+   150,
+   0.3
+  ],
+  [
+   "mithai",
+   [
+    "mysore pak",
+    "barfi",
+    "sandesh",
+    "kaju katli",
+    "ghevar",
+    "gajak",
+    "pinni",
+    "double ka meetha",
+    "gujiya",
+    "chhena poda",
+    "holige"
+   ],
+   "piece",
+   40,
+   180,
+   3,
+   20,
+   10,
+   0.5,
+   0.4,
+   40,
+   0.1
+  ],
+  [
+   "puran poli",
+   [],
+   "piece",
+   80,
+   280,
+   6,
+   45,
+   9,
+   4,
+   1.5,
+   25,
+   0
+  ],
+  [
+   "pitha",
+   [
+    "poda pitha",
+    "chakuli pitha"
+   ],
+   "piece",
+   60,
+   150,
+   3,
+   28,
+   3,
+   1.5,
+   0.8,
+   15,
+   0
+  ],
+  [
+   "banana",
+   [
+    "kela",
+    "bananas"
+   ],
+   "piece",
+   120,
+   105,
+   1.3,
+   27,
+   0.4,
+   3,
+   0.3,
+   6,
+   0
+  ],
+  [
+   "apple",
+   [],
+   "piece",
+   180,
+   95,
+   0.5,
+   25,
+   0.3,
+   4.4,
+   0.2,
+   11,
+   0
+  ],
+  [
+   "fruit",
+   [
+    "fruits",
+    "mixed fruit",
+    "papaya",
+    "guava",
+    "mango",
+    "orange",
+    "berries",
+    "grapes"
+   ],
+   "bowl",
+   150,
+   90,
+   1.2,
+   22,
+   0.4,
+   3.5,
+   0.4,
+   25,
+   0
+  ],
+  [
+   "dates",
+   [
+    "khajur"
+   ],
+   "piece",
+   8,
+   23,
+   0.2,
+   6,
+   0,
+   0.6,
+   0.1,
+   5,
+   0
+  ],
+  [
+   "nuts",
+   [
+    "almonds",
+    "badam",
+    "walnuts",
+    "peanuts",
+    "cashews"
+   ],
+   "serving",
+   30,
+   175,
+   6,
+   6,
+   15,
+   3,
+   1.1,
+   60,
+   0
+  ],
+  [
+   "roasted chana",
+   [
+    "chana dal roasted"
+   ],
+   "serving",
+   30,
+   110,
+   6,
+   18,
+   1.5,
+   5,
+   2,
+   20,
+   0
+  ],
+  [
+   "gur",
+   [
+    "jaggery"
+   ],
+   "piece",
+   10,
+   38,
+   0,
+   9.8,
+   0,
+   0,
+   1.1,
+   8,
+   0
+  ],
+  [
+   "curd",
+   [
+    "dahi",
+    "yogurt",
+    "raita",
+    "boondi raita",
+    "greek yogurt"
+   ],
+   "bowl",
+   150,
+   90,
+   5,
+   7,
+   4.5,
+   0,
+   0.1,
+   180,
+   0.6
+  ],
+  [
+   "ghee",
+   [],
+   "spoon",
+   5,
+   45,
+   0,
+   0,
+   5,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   "butter",
+   [
+    "white butter",
+    "makhan"
+   ],
+   "spoon",
+   10,
+   72,
+   0.1,
+   0,
+   8,
+   0,
+   0,
+   2,
+   0
+  ],
+  [
+   "cheese",
+   [
+    "cream cheese"
+   ],
+   "slice",
+   20,
+   70,
+   4.5,
+   0.5,
+   5.5,
+   0,
+   0.1,
+   140,
+   0.2
+  ],
+  [
+   "pickle",
+   [
+    "achaar",
+    "achar",
+    "thecha",
+    "chutney",
+    "coconut chutney",
+    "mint chutney",
+    "green chutney",
+    "kara chutney"
+   ],
+   "spoon",
+   15,
+   30,
+   0.3,
+   2,
+   2.5,
+   0.5,
+   0.2,
+   5,
+   0
+  ],
+  [
+   "papad",
+   [
+    "appalam"
+   ],
+   "piece",
+   12,
+   45,
+   2.5,
+   6,
+   1,
+   1,
+   0.6,
+   10,
+   0
+  ],
+  [
+   "honey",
+   [],
+   "spoon",
+   21,
+   64,
+   0,
+   17,
+   0,
+   0,
+   0.1,
+   1,
+   0
+  ],
+  [
+   "soup",
+   [
+    "chicken noodle soup",
+    "lentil soup"
+   ],
+   "bowl",
+   250,
+   120,
+   6,
+   15,
+   4,
+   2,
+   1,
+   30,
+   0.2
+  ],
+  [
+   "chai",
+   [
+    "tea",
+    "masala chai",
+    "cutting chai",
+    "adrak chai",
+    "chaha",
+    "cha",
+    "chah",
+    "chaya",
+    "irani chai",
+    "noon chai",
+    "lal cha",
+    "lal chah",
+    "assam tea",
+    "adrak tulsi chai"
+   ],
+   "cup",
+   150,
+   90,
+   2.5,
+   12,
+   3,
+   0,
+   0.1,
+   90,
+   0.2
+  ],
+  [
+   "black tea",
+   [
+    "green tea",
+    "herbal tea",
+    "chamomile tea",
+    "peppermint tea",
+    "lemon tea",
+    "rooibos tea",
+    "tulsi tea",
+    "ginger tea",
+    "kahwa",
+    "red tea",
+    "kadha",
+    "kashaya"
+   ],
+   "cup",
+   200,
+   5,
+   0,
+   1,
+   0,
+   0,
+   0.1,
+   5,
+   0
+  ],
+  [
+   "filter coffee",
+   [
+    "kaapi",
+    "chukku kaapi"
+   ],
+   "cup",
+   150,
+   100,
+   3,
+   12,
+   3.5,
+   0,
+   0.1,
+   100,
+   0.2
+  ],
+  [
+   "coffee",
+   [
+    "black coffee",
+    "espresso",
+    "double espresso",
+    "americano",
+    "cold brew",
+    "kopi"
+   ],
+   "cup",
+   200,
+   5,
+   0.3,
+   0,
+   0,
+   0,
+   0.1,
+   5,
+   0
+  ],
+  [
+   "latte",
+   [
+    "cappuccino",
+    "flat white",
+    "oat latte",
+    "oat milk latte",
+    "galão",
+    "double double"
+   ],
+   "cup",
+   250,
+   150,
+   8,
+   12,
+   7,
+   0,
+   0.1,
+   250,
+   0.8
+  ],
+  [
+   "cold coffee",
+   [
+    "frappe",
+    "mocha frappe",
+    "iced coffee"
+   ],
+   "glass",
+   300,
+   250,
+   6,
+   38,
+   8,
+   0,
+   0.2,
+   180,
+   0.5
+  ],
+  [
+   "milk",
+   [
+    "doodh",
+    "haldi doodh",
+    "turmeric milk",
+    "badam milk",
+    "cold milk",
+    "thanda doodh",
+    "chocolate milk"
+   ],
+   "glass",
+   250,
+   160,
+   8,
+   12,
+   8.5,
+   0,
+   0.1,
+   300,
+   1
+  ],
+  [
+   "lassi",
+   [
+    "sweet lassi",
+    "mango lassi"
+   ],
+   "glass",
+   250,
+   220,
+   7,
+   32,
+   7,
+   0,
+   0.2,
+   250,
+   0.6
+  ],
+  [
+   "buttermilk",
+   [
+    "chaas",
+    "chaach",
+    "mattha",
+    "majjiga",
+    "taak",
+    "sol kadhi"
+   ],
+   "glass",
+   250,
+   60,
+   3.5,
+   5,
+   2.5,
+   0,
+   0.1,
+   150,
+   0.3
+  ],
+  [
+   "nimbu pani",
+   [
+    "lemonade",
+    "lemon water",
+    "shikanji",
+    "jaljeera",
+    "nimbu soda",
+    "fresh lime soda",
+    "aam panna",
+    "kokum sharbat",
+    "sharbat",
+    "bael sharbat",
+    "rooh afza"
+   ],
+   "glass",
+   250,
+   70,
+   0,
+   17,
+   0,
+   0,
+   0.1,
+   5,
+   0
+  ],
+  [
+   "coconut water",
+   [
+    "nariyal pani",
+    "nariyal paani"
+   ],
+   "glass",
+   250,
+   45,
+   1.7,
+   9,
+   0.5,
+   2.5,
+   0.7,
+   60,
+   0
+  ],
+  [
+   "juice",
+   [
+    "orange juice",
+    "green juice",
+    "sugarcane juice",
+    "amla juice",
+    "lauki juice",
+    "beetroot juice",
+    "anar juice",
+    "beetroot amla juice"
+   ],
+   "glass",
+   250,
+   115,
+   1.5,
+   26,
+   0.5,
+   0.5,
+   0.5,
+   25,
+   0
+  ],
+  [
+   "sattu sharbat",
+   [
+    "sattu"
+   ],
+   "glass",
+   250,
+   140,
+   7,
+   22,
+   2,
+   5,
+   2.5,
+   30,
+   0
+  ],
+  [
+   "thandai",
+   [],
+   "glass",
+   250,
+   250,
+   7,
+   30,
+   11,
+   1,
+   1,
+   250,
+   0.6
+  ],
+  [
+   "smoothie",
+   [
+    "banana smoothie",
+    "green smoothie"
+   ],
+   "glass",
+   300,
+   220,
+   6,
+   42,
+   3,
+   4,
+   0.8,
+   150,
+   0.3
+  ],
+  [
+   "protein shake",
+   [
+    "whey",
+    "whey protein",
+    "whey shake"
+   ],
+   "scoop",
+   30,
+   120,
+   24,
+   3,
+   1.5,
+   0,
+   0.5,
+   120,
+   0.4
+  ],
+  [
+   "soft drink",
+   [
+    "coke",
+    "pepsi",
+    "cold drink",
+    "soda",
+    "thums up",
+    "sprite",
+    "masala soda",
+    "mocktail",
+    "gatorade",
+    "glucon-d",
+    "ors",
+    "electrolytes"
+   ],
+   "bottle",
+   300,
+   130,
+   0,
+   33,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   "diet coke",
+   [
+    "coke zero",
+    "diet soda"
+   ],
+   "bottle",
+   300,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   "energy drink",
+   [
+    "red bull",
+    "monster"
+   ],
+   "bottle",
+   250,
+   115,
+   0,
+   28,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   "beer",
+   [
+    "heineken",
+    "tiger beer",
+    "pint"
+   ],
+   "glass",
+   330,
+   145,
+   1.5,
+   12,
+   0,
+   0,
+   0.1,
+   15,
+   0.1
+  ],
+  [
+   "wine",
+   [
+    "red wine",
+    "white wine",
+    "rosé",
+    "prosecco",
+    "pinot",
+    "vinho verde"
+   ],
+   "glass",
+   150,
+   125,
+   0.1,
+   4,
+   0,
+   0,
+   0.7,
+   12,
+   0
+  ],
+  [
+   "whisky",
+   [
+    "whiskey",
+    "rum",
+    "vodka",
+    "brandy",
+    "gin",
+    "tequila",
+    "country liquor"
+   ],
+   "peg",
+   30,
+   70,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   "cocktail",
+   [
+    "mimosa",
+    "aperol spritz",
+    "old fashioned",
+    "vodka cranberry"
+   ],
+   "glass",
+   150,
+   170,
+   0,
+   15,
+   0,
+   0,
+   0.1,
+   5,
+   0
+  ],
+  [
+   "water",
+   [
+    "warm water",
+    "paani",
+    "sparkling water",
+    "methi water",
+    "methi paani",
+    "jeera water",
+    "jeera paani",
+    "ajwain water",
+    "lemon honey water",
+    "haldi water",
+    "honey ginger water"
+   ],
+   "glass",
+   250,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   10,
+   0
+  ],
+  [
+   "thali",
+   [
+    "fish thali",
+    "veg thali",
+    "sadya",
+    "mahaprasad",
+    "meals"
+   ],
+   "plate",
+   500,
+   750,
+   22,
+   110,
+   22,
+   12,
+   5,
+   200,
+   0.5
+  ],
+  [
+   "veg puff",
+   [
+    "puff",
+    "egg puff"
+   ],
+   "piece",
+   80,
+   260,
+   5,
+   25,
+   16,
+   1,
+   1,
+   20,
+   0
+  ],
+  [
+   "kebab",
+   [
+    "seekh kebab",
+    "kebabs"
+   ],
+   "piece",
+   60,
+   150,
+   12,
+   3,
+   10,
+   0.5,
+   1.2,
+   20,
+   0.5
+  ],
+  [
+   "paniyaram",
+   [
+    "kuzhi paniyaram"
+   ],
+   "piece",
+   30,
+   60,
+   1.5,
+   9,
+   2,
+   0.5,
+   0.3,
+   5,
+   0
+  ],
+  [
+   "jigarthanda",
+   [],
+   "glass",
+   250,
+   280,
+   7,
+   40,
+   10,
+   0,
+   0.3,
+   250,
+   0.6
+  ],
+  [
+   "sweet potato",
+   [
+    "shakarkandi"
+   ],
+   "piece",
+   130,
+   115,
+   2,
+   27,
+   0.1,
+   4,
+   0.8,
+   40,
+   0
+  ],
+  [
+   "pancakes",
+   [
+    "pancake"
+   ],
+   "piece",
+   40,
+   90,
+   2.5,
+   11,
+   4,
+   0.4,
+   0.6,
+   50,
+   0.1
+  ],
+  [
+   "hummus",
+   [],
+   "bowl",
+   100,
+   170,
+   8,
+   14,
+   10,
+   6,
+   2.5,
+   40,
+   0
+  ],
+  [
+   "sushi",
+   [],
+   "plate",
+   200,
+   300,
+   12,
+   50,
+   5,
+   2,
+   1.5,
+   20,
+   1
+  ]
+ ]
+}

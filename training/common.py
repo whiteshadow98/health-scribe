@@ -21,7 +21,9 @@ PLAN_SYSTEM: str = PROMPTS["plan_system"]
 
 INTAKE_CATEGORIES = ["food", "beverage", "medication"]
 SEVERITIES = ["mild", "moderate", "severe"]
-QUERY_KINDS = ["after", "frequency", "sleep", "overview"]
+QUERY_KINDS = ["after", "frequency", "sleep", "overview", "nutrition"]
+UNITS = ["", "bowl", "plate", "cup", "glass", "bottle", "slice", "scoop", "spoon", "peg", "pint", "packet", "serving",
+         "tablet", "capsule", "g", "ml", "l"]
 
 # ---------------------------------------------------------------------------
 # Schemas for the teacher (Claude structured outputs: every object needs
@@ -39,6 +41,8 @@ PARSED_LOG_SCHEMA = _obj(
             "items": _obj(
                 {
                     "item": {"type": "string"},
+                    "quantity": {"anyOf": [{"type": "number"}, {"type": "null"}]},
+                    "unit": {"type": "string", "enum": UNITS},
                     "category": {"type": "string", "enum": INTAKE_CATEGORIES},
                     "time": {"type": "string"},
                 }
@@ -146,7 +150,13 @@ def sanitize_log(raw) -> dict:
     obj = raw if isinstance(raw, dict) else {}
     return {
         "intake": [
-            {"item": _s(i.get("item")), "category": _enum(i.get("category"), INTAKE_CATEGORIES, "food"), "time": _time(i.get("time"))}
+            {
+                "item": _s(i.get("item")),
+                "quantity": _num(i.get("quantity"), 5000),
+                "unit": _enum(i.get("unit"), UNITS, ""),
+                "category": _enum(i.get("category"), INTAKE_CATEGORIES, "food"),
+                "time": _time(i.get("time")),
+            }
             for i in _arr(obj.get("intake"))
             if _s(i.get("item"))
         ],
@@ -185,10 +195,13 @@ def sanitize_plan(raw) -> dict:
         days = int(obj.get("days"))
     except (TypeError, ValueError):
         days = 0
+    subject = _s(obj.get("subject")).lower()
+    if kind == "nutrition" and not subject:
+        subject = "all"
     return {
         "kind": kind,
         "trigger": _s(obj.get("trigger")).lower(),
-        "subject": _s(obj.get("subject")).lower(),
+        "subject": subject,
         "window_hours": window if 0 < window <= 48 else 6,
         "days": days if 0 < days <= 3650 else 0,
     }
@@ -228,11 +241,17 @@ def _match_lists(pred: list[dict], ref: list[dict], key: str):
     return pairs
 
 
+# Attributes compared on matched intake items. Quantity/unit are skipped for labels made
+# before those fields existed, so old and new results stay comparable.
+INTAKE_ATTRS = ("category", "time", "quantity", "unit")
+
+
 def score_log(pred: dict, ref: dict) -> dict:
     """Counts for precision/recall of items, plus attribute accuracy on matched items."""
+    pred, ref = sanitize_log(pred), sanitize_log(ref)
     out: dict[str, float] = {}
     for field, key, attrs in (
-        ("intake", "item", ("category", "time")),
+        ("intake", "item", INTAKE_ATTRS),
         ("activities", "type", ("duration_mins", "time")),
         ("symptoms", "type", ("severity", "location", "time")),
     ):
@@ -242,7 +261,7 @@ def score_log(pred: dict, ref: dict) -> dict:
         out[f"{field}_ref"] = len(ref[field])
         for attr in attrs:
             out[f"{field}_{attr}_ok"] = sum(
-                1 for p, r in pairs if (str(p[attr]).lower() == str(r[attr]).lower())
+                1 for p, r in pairs if str(p.get(attr, "")).lower() == str(r.get(attr, "")).lower()
             )
         out[f"{field}_matched"] = len(pairs)
     ps, rs = pred["sleep_hours"], ref["sleep_hours"]
@@ -250,7 +269,7 @@ def score_log(pred: dict, ref: dict) -> dict:
     strict = all(
         out[f"{f}_tp"] == out[f"{f}_pred"] == out[f"{f}_ref"]
         and all(out[f"{f}_{a}_ok"] == out[f"{f}_matched"] for a in attrs)
-        for f, attrs in (("intake", ("category", "time")), ("activities", ("duration_mins", "time")), ("symptoms", ("severity", "location", "time")))
+        for f, attrs in (("intake", INTAKE_ATTRS), ("activities", ("duration_mins", "time")), ("symptoms", ("severity", "location", "time")))
     )
     out["exact"] = int(strict and out["sleep_ok"] == 1)
     return out
@@ -265,7 +284,9 @@ def summarize_scores(rows: list[dict]) -> dict:
         return round(100 * a / b, 1) if b else 100.0
 
     summary = {"notes": n, "exact_match_%": pct(total.get("exact", 0), n), "sleep_%": pct(total.get("sleep_ok", 0), n)}
-    for field, attrs in (("intake", ("category", "time")), ("activities", ("duration_mins", "time")), ("symptoms", ("severity", "location", "time"))):
+    for field, attrs in (("intake", INTAKE_ATTRS), ("activities", ("duration_mins", "time")), ("symptoms", ("severity", "location", "time"))):
+        if f"{field}_{attrs[-1]}_ok" not in total:
+            continue
         p = pct(total[f"{field}_tp"], total[f"{field}_pred"])
         r = pct(total[f"{field}_tp"], total[f"{field}_ref"])
         f1 = round(2 * p * r / (p + r), 1) if p + r else 0.0

@@ -3,11 +3,19 @@
 
 export const INTAKE_CATEGORIES = ['food', 'beverage', 'medication'] as const
 export const SEVERITIES = ['mild', 'moderate', 'severe'] as const
+/** Measure words the model may use; "" when the note gives a count without one ("2 roti"). */
+export const UNITS = [
+  '', 'bowl', 'plate', 'cup', 'glass', 'bottle', 'slice', 'scoop', 'spoon', 'peg', 'pint', 'packet', 'serving',
+  'tablet', 'capsule', 'g', 'ml', 'l',
+] as const
 
 export type IntakeCategory = (typeof INTAKE_CATEGORIES)[number]
 export type Severity = (typeof SEVERITIES)[number]
 
-export type Intake = { item: string; category: IntakeCategory; time: string }
+export type Unit = (typeof UNITS)[number]
+
+/** quantity is how many units (or pieces/servings when unit is ""), or null when the note gives no amount. */
+export type Intake = { item: string; quantity: number | null; unit: Unit; category: IntakeCategory; time: string }
 export type Activity = { type: string; duration_mins: number | null; time: string }
 export type Symptom = { type: string; severity: Severity; location: string; time: string }
 
@@ -44,10 +52,12 @@ export const PARSED_LOG_JSON_SCHEMA = {
         type: 'object',
         properties: {
           item: { type: 'string' },
+          quantity: { anyOf: [{ type: 'number' }, { type: 'null' }] },
+          unit: { type: 'string', enum: [...UNITS] },
           category: { type: 'string', enum: [...INTAKE_CATEGORIES] },
           time: timeField,
         },
-        required: ['item', 'category', 'time'],
+        required: ['item', 'quantity', 'unit', 'category', 'time'],
       },
     },
     activities: {
@@ -116,6 +126,8 @@ export function sanitizeParsedLog(raw: unknown): ParsedLog {
     intake: asArray(obj.intake)
       .map((i) => ({
         item: asString(i.item),
+        quantity: asNumber(i.quantity, 5000),
+        unit: asEnum(i.unit, UNITS, ''),
         category: asEnum(i.category, INTAKE_CATEGORIES, 'food'),
         time: asTime(i.time),
       }))

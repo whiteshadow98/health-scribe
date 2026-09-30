@@ -5,6 +5,7 @@ import { db, exportBackup, importBackup, localDay, requestPersistentStorage } fr
 import { useLlm } from '../lib/llm'
 import { deleteCachedModel } from '../lib/webllm'
 import { MODEL_OPTIONS, getModelPreference, modelId, setModelPreference, type ModelPreference } from '../lib/models'
+import { DAILY_TARGETS, getProfile, setProfile, type Profile } from '../lib/nutrition'
 
 export function SettingsSheet({ onClose }: { onClose: () => void }) {
   const llm = useLlm()
@@ -13,6 +14,7 @@ export function SettingsSheet({ onClose }: { onClose: () => void }) {
   const [message, setMessage] = useState<string | null>(null)
   const [confirmWipe, setConfirmWipe] = useState(false)
   const [preference, setPreference] = useState<ModelPreference>(getModelPreference)
+  const [profile, setProfileState] = useState<Profile>(getProfile)
   const fileRef = useRef<HTMLInputElement>(null)
 
   async function refreshUsage() {
@@ -113,6 +115,35 @@ export function SettingsSheet({ onClose }: { onClose: () => void }) {
               e.target.value = ''
             }}
           />
+        </Group>
+
+        <Group title="Nutrition targets">
+          <p className="text-sm text-slate-600">Daily targets follow ICMR-NIN guidance for a sedentary adult.</p>
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            {(
+              [
+                ['female', 'Woman'],
+                ['male', 'Man'],
+                ['average', 'Not set'],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                onClick={() => {
+                  setProfile(value)
+                  setProfileState(value)
+                }}
+                className={`rounded-xl px-3 py-2 text-sm font-semibold ring-1 ${
+                  profile === value ? 'bg-teal-50 text-teal-900 ring-teal-300' : 'text-slate-700 ring-slate-200'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <p className="mt-2 text-xs text-slate-500">
+            {DAILY_TARGETS[profile].kcal} kcal, {DAILY_TARGETS[profile].protein} g protein, {DAILY_TARGETS[profile].iron} mg iron per day
+          </p>
         </Group>
 
         <Group title="AI model">

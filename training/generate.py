@@ -90,6 +90,78 @@ PERSONAS = [
     "a 31 year old woman in San Francisco who is lactose intolerant",
 ]
 
+# Most users are in India, so about 80% of new notes use these (see pick_persona).
+INDIAN_PERSONAS = [
+    "a 27 year old IT employee in Hyderabad with gastritis who lives on office canteen food",
+    "a 45 year old homemaker in Lucknow with hypothyroidism taking Thyronorm",
+    "a 33 year old bank manager in Indore with high BP",
+    "a 24 year old MBA student in Delhi who pulls all-nighters on chai and Maggi",
+    "a 58 year old retired teacher in Coimbatore with type 2 diabetes",
+    "a 30 year old woman in Pune with PCOD",
+    "a 40 year old auto driver in Chennai with lower back pain",
+    "a 35 year old software tester in Noida with cervical spondylosis",
+    "a 29 year old new mother in Kochi, breastfeeding and sleep deprived",
+    "a 50 year old shop owner in Surat who loves farsan and has acidity",
+    "a 22 year old engineering student in Kota preparing for exams",
+    "a 38 year old police constable in Patna on long duty hours",
+    "a 44 year old woman in Bhubaneswar with anemia and low vitamin D",
+    "a 31 year old delivery rider in Bengaluru who eats street food",
+    "a 62 year old man in Mysuru with arthritis and a morning walk habit",
+    "a 26 year old woman in Guwahati with migraines",
+    "a 36 year old sales executive in Ahmedabad who travels by train a lot",
+    "a 48 year old woman in Nagpur who keeps vrat twice a week",
+    "a 28 year old gym trainer in Chandigarh tracking protein",
+    "a 55 year old man in Varanasi recovering from dengue",
+    "a 34 year old call center agent in Gurgaon on night shifts",
+    "a 41 year old doctor in Jaipur who skips meals on busy OPD days",
+    "a 19 year old college student in Kolkata with asthma using an inhaler",
+    "a 37 year old woman in Mangaluru with IBS",
+    "a 46 year old farmer in Nashik",
+    "a 32 year old journalist in Mumbai who smokes and drinks a lot of cutting chai",
+    "a 52 year old woman in Thiruvananthapuram with thyroid and knee pain",
+    "a 25 year old content creator in Goa with an irregular routine",
+    "a 43 year old government clerk in Bhopal with borderline diabetes",
+    "a 39 year old woman in Dehradun with vitamin B12 deficiency",
+    "a 29 year old nurse in Shillong who works long hospital shifts",
+    "a 47 year old tea estate supervisor in Assam with joint pain",
+    "a 33 year old schoolteacher in Bhubaneswar with migraines",
+    "a 26 year old UPSC aspirant in Patna living on hostel mess food",
+    "a 54 year old shopkeeper in Srinagar with high cholesterol",
+    "a 38 year old software lead in Vijayawada with fatty liver",
+    "a 42 year old woman in Raipur with hypothyroidism and weight gain",
+    "a 21 year old medical student in Manipal with exam stress",
+    "a 60 year old retired railway employee in Kanpur with diabetes and BP",
+    "a 35 year old mother of twins in Nagpur who barely sleeps",
+    "a 31 year old cab driver in Hyderabad with back pain and acidity",
+    "a 45 year old professor in Kolkata who loves fish and sweets and has gout",
+    "a 27 year old fitness influencer in Mumbai on a high protein diet",
+    "a 50 year old woman in Madurai with arthritis and anemia",
+    "a 36 year old army officer in Jammu posted in cold weather",
+]
+
+INDIAN_FOCUS = [
+    "Indian medicines by brand with amounts (Dolo 650, Crocin, Combiflam, Saridon, Pan-D, Rantac, Digene, Eno, Allegra, Montair LC, Meftal Spas, Zincovit, Becosules, Shelcal, Thyronorm, Glycomet, Telma)",
+    "home remedies or ayurvedic items (haldi doodh, kadha, ajwain, isabgol, triphala, chyawanprash, ashwagandha, Hajmola)",
+    "regional home food (sambar rice, rasam, dosa, puttu, appam, litti chokha, dal baati, macher jhol, pav bhaji, dhokla, thepla, poha jalebi, chole bhature, kadhi chawal)",
+    "street food or snacks (pani puri, samosa, vada pav, momos, kachori, bhel, chaat, pakode)",
+    "office or college canteen food and tiffin",
+    "chai or coffee breaks with biscuits",
+    "fasting or vrat food (sabudana khichdi, fruits, kuttu puri, makhana)",
+    "festival or wedding food (mithai, biryani, ladoo, gulab jamun)",
+    "a chronic condition common in India (thyroid, diabetes sugar readings, BP readings, acidity, PCOD, anemia)",
+    "a viral fever, cold or seasonal illness (dengue, typhoid, viral fever, allergy in monsoon or winter pollution)",
+    "an evening walk, morning walk in the park, yoga or pranayama",
+    "cricket, badminton or a gym session",
+    "commute stress, heat, pollution or long work hours",
+]
+
+INDIAN_STYLES = [
+    "Hinglish: Hindi and English mixed in Roman script (aaj, thoda, bahut, kal raat, subah)",
+    "Indian English with a few Tamil, Telugu, Bengali or Marathi words mixed in",
+    "voice dictation in Indian English: rambling, 'so basically', 'na', 'yaar', no punctuation",
+    "quick WhatsApp style note with abbreviations (bf, dnr, tmrw, hrs) and typos",
+]
+
 STYLES = [
     "voice dictation transcript: rambling, filler words like um and uh, run-on sentences, no punctuation",
     "very terse shorthand, abbreviations (hrs, w/, b4, bf, tmrw), lowercase",
@@ -143,13 +215,20 @@ def random_when(rng: random.Random) -> datetime:
     return day.replace(hour=hour, minute=rng.choice([0, 5, 10, 15, 20, 30, 40, 45, 50, 55]))
 
 
-def parse_request_prompt(rng: random.Random, n: int) -> tuple[str, list[str]]:
-    persona = rng.choice(PERSONAS)
-    styles = rng.sample(STYLES, 3)
+def pick_persona(rng: random.Random, indian_share: float) -> tuple[str, bool]:
+    if rng.random() < indian_share:
+        return rng.choice(INDIAN_PERSONAS), True
+    return rng.choice(PERSONAS), False
+
+
+def parse_request_prompt(rng: random.Random, n: int, indian_share: float = 0.0) -> tuple[str, list[str]]:
+    persona, indian = pick_persona(rng, indian_share) if indian_share else (rng.choice(PERSONAS), False)
+    styles = rng.sample(INDIAN_STYLES, 2) + rng.sample(STYLES, 1) if indian else rng.sample(STYLES, 3)
+    focus_pool = INDIAN_FOCUS * 2 + FOCUS if indian else FOCUS
     whens = [random_when(rng) for _ in range(n)]
     lines = []
     for i, when in enumerate(whens, 1):
-        focus = rng.sample(FOCUS, rng.choice([1, 2]))
+        focus = list(dict.fromkeys(rng.sample(focus_pool, rng.choice([1, 2]))))
         lines.append(f"{i}. Written {describe_when(when)}. Style: {rng.choice(styles)}. Include: {'; '.join(focus)}.")
     prompt = (
         f"Write {n} different health notes by {persona}, one per line below, then label each one.\n"
@@ -340,6 +419,53 @@ def cmd_submit(args, client: anthropic.Anthropic) -> None:
     print(f"Submitted batch {batch.id} with {args.requests} requests ({args.task}/{args.split}).")
 
 
+def cmd_sync(args, client: anthropic.Anthropic) -> None:
+    """Runs a split with direct (non-batch) requests: twice the price, but no queue."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    requests, meta = build_requests(args.task, args.split, args.requests, seed=args.seed)
+
+    def one(req):
+        msg = client.beta.messages.create(
+            **req["params"], betas=["server-side-fallback-2026-07-01"], extra_body={"fallbacks": "default"}
+        )
+        return req["custom_id"], msg
+
+    rows, cost = [], 0.0
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        for cid, msg in pool.map(one, requests):
+            cost += usage_cost(msg.usage, batch=False)
+            data = response_json(msg)
+            if data is None:
+                print(f"{cid}: no usable output ({msg.stop_reason})")
+                continue
+            rows += rows_from_parse(cid, data, meta[cid]["whens"], args.split) if args.task == "parse" else rows_from_plan(cid, data, args.split)
+    write_jsonl(RAW / f"{args.task}_{args.split}_sync.jsonl", rows)
+    print(f"{args.task}/{args.split}: {len(rows)} rows, ${cost:.2f}")
+    merge_outputs()
+
+
+def cmd_cancel(args, client: anthropic.Anthropic) -> None:
+    batches = load_batches()
+    for b in batches:
+        if b["task"] == args.task and b["split"] == args.split and not b.get("collected"):
+            client.messages.batches.cancel(b["id"])
+            b["collected"] = True
+            b["canceled"] = True
+            print(f"Canceled {b['id']} ({args.task}/{args.split})")
+    save_batches(batches)
+
+
+def cmd_specs(args, client) -> None:
+    """Prints note specs for writing training data by hand (in a Claude Code session) in chunks."""
+    rng = random.Random(5000 + args.chunk)
+    for part in range(args.requests):
+        prompt, whens = parse_request_prompt(rng, NOTES_PER_REQUEST, indian_share=args.indian_share)
+        print(f"--- part {part} (ids: session-{args.chunk}-{part}-0..{NOTES_PER_REQUEST - 1})")
+        print(prompt.split("\n\nReturn")[0])
+        print("written_at:", " ".join(whens))
+
+
 def cmd_status(args, client: anthropic.Anthropic) -> None:
     for b in load_batches():
         info = client.messages.batches.retrieve(b["id"])
@@ -437,17 +563,29 @@ def main() -> None:
     s.add_argument("--seed", type=int)
     s.add_argument("--effort", default=EFFORT)
     s.add_argument("--per-request", type=int, default=NOTES_PER_REQUEST)
+    y = sub.add_parser("sync")
+    y.add_argument("--task", choices=["parse", "plan"], required=True)
+    y.add_argument("--split", choices=["train", "eval"], required=True)
+    y.add_argument("--requests", type=int, required=True)
+    y.add_argument("--seed", type=int)
+    c = sub.add_parser("cancel")
+    c.add_argument("--task", choices=["parse", "plan", "relabel"], required=True)
+    c.add_argument("--split", choices=["train", "eval"], required=True)
+    k = sub.add_parser("specs")
+    k.add_argument("--chunk", type=int, required=True)
+    k.add_argument("--requests", type=int, default=3)
+    k.add_argument("--indian-share", type=float, default=0.8)
     sub.add_parser("status")
     sub.add_parser("collect")
     r = sub.add_parser("relabel")
     r.add_argument("--split", default="eval")
     args = parser.parse_args()
-    if getattr(args, "seed", 0) is None:
+    if getattr(args, "seed", 0) is None and getattr(args, "split", None) in ("train", "eval"):
         # Different default seeds keep train and eval notes apart.
         args.seed = {"train": 1000, "eval": 2000}[args.split] + (0 if args.task == "parse" else 500)
 
-    client = anthropic.Anthropic()
-    {"pilot": cmd_pilot, "submit": cmd_submit, "status": cmd_status, "collect": cmd_collect, "relabel": cmd_relabel}[args.cmd](args, client)
+    client = None if args.cmd == "specs" else anthropic.Anthropic()
+    {"pilot": cmd_pilot, "submit": cmd_submit, "sync": cmd_sync, "cancel": cmd_cancel, "specs": cmd_specs, "status": cmd_status, "collect": cmd_collect, "relabel": cmd_relabel}[args.cmd](args, client)
 
 
 if __name__ == "__main__":

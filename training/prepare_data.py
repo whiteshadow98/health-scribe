@@ -31,24 +31,31 @@ from common import (
 SEED = 42
 VALID_FRACTION = 0.05
 
+# Swap targets for augmentation. Most users are in India, so Indian items are picked 75% of the time.
+INDIAN_SHARE = 0.75
 SWAPS = {
-    "beverage": [
-        "coffee", "black coffee", "latte", "cappuccino", "espresso", "cold brew", "chai", "green tea", "black tea",
-        "masala chai", "orange juice", "coconut water", "buttermilk", "lassi", "beer", "red wine", "whisky", "coke",
-        "diet coke", "red bull", "protein shake", "smoothie", "milk", "lemonade", "kombucha", "hot chocolate",
-    ],
-    "food": [
-        "oatmeal", "toast", "eggs", "omelette", "poha", "upma", "idli", "dosa", "paratha", "aloo paratha", "roti",
-        "dal", "rice", "rajma chawal", "biryani", "paneer tikka", "chole bhature", "khichdi", "samosa", "maggi",
-        "pizza", "burger", "fries", "pasta", "chicken sandwich", "salad", "sushi", "ramen", "tacos", "banana",
-        "apple", "yogurt", "granola", "cheesecake", "ice cream", "chocolate", "cookies", "chips", "popcorn",
-        "fried chicken", "fish curry", "butter chicken", "noodles", "momos", "pav bhaji", "vada pav", "dhokla",
-    ],
-    "medication": [
-        "ibuprofen", "paracetamol", "advil", "tylenol", "crocin", "dolo 650", "aspirin", "cetirizine", "pan d",
-        "omeprazole", "digene", "eno", "vitamin d", "vitamin b12", "multivitamin", "iron tablet", "magnesium",
-        "melatonin", "probiotic", "zinc", "fish oil", "antacid",
-    ],
+    "beverage": {
+        "indian": ["chai", "masala chai", "cutting chai", "filter coffee", "lassi", "buttermilk", "chaas", "nimbu pani",
+                   "coconut water", "haldi doodh", "kadha", "sugarcane juice", "jaljeera", "badam milk", "thandai", "rooh afza"],
+        "global": ["coffee", "black coffee", "latte", "cappuccino", "green tea", "orange juice", "beer", "red wine",
+                   "whisky", "coke", "red bull", "protein shake", "smoothie", "milk", "lemonade", "cold coffee"],
+    },
+    "food": {
+        "indian": ["poha", "upma", "idli", "dosa", "masala dosa", "paratha", "aloo paratha", "roti", "dal", "rice", "rajma chawal",
+                   "chole bhature", "khichdi", "biryani", "paneer tikka", "samosa", "vada pav", "pav bhaji", "dhokla", "thepla",
+                   "kachori", "pani puri", "bhel puri", "momos", "maggi", "puttu", "appam", "litti chokha", "dal baati",
+                   "kadhi chawal", "curd rice", "sambar rice", "besan chilla", "sabudana khichdi", "gulab jamun", "jalebi",
+                   "ladoo", "rasgulla", "pakode", "aloo tikki", "egg bhurji", "butter chicken", "fish curry", "rasam"],
+        "global": ["oatmeal", "toast", "eggs", "omelette", "pizza", "burger", "fries", "pasta", "sandwich", "salad",
+                   "noodles", "banana", "apple", "yogurt", "chocolate", "cookies", "chips", "ice cream", "fried chicken"],
+    },
+    "medication": {
+        "indian": ["dolo 650", "crocin", "combiflam", "saridon", "pan d", "pan 40", "rantac", "digene", "eno", "allegra",
+                   "montair lc", "meftal spas", "zincovit", "becosules", "shelcal", "thyronorm", "glycomet", "telma 40",
+                   "ecosprin", "isabgol", "hajmola", "chyawanprash", "ashwagandha", "ors", "cetirizine", "limcee"],
+        "global": ["ibuprofen", "paracetamol", "advil", "tylenol", "aspirin", "omeprazole", "vitamin d", "vitamin b12",
+                   "multivitamin", "iron tablet", "magnesium", "melatonin", "probiotic", "zinc", "fish oil"],
+    },
 }
 
 KEYBOARD_NEIGHBORS = dict(zip("qwertyuiopasdfghjklzxcvbnm", "wqeryutoipsadgfhkjlxzvcnbm"))
@@ -98,9 +105,12 @@ def swap_items(note: str, label: dict, rng: random.Random) -> tuple[str, dict] |
     used = {i["item"] for i in label["intake"]}
     for idx in rng.sample(candidates, min(len(candidates), rng.choice([1, 2]))):
         item = label["intake"][idx]
-        options = [o for o in SWAPS[item["category"]] if o not in used]
+        pool = SWAPS[item["category"]]["indian" if rng.random() < INDIAN_SHARE else "global"]
+        options = [o for o in pool if o not in used]
         new = rng.choice(options)
         match = word_pattern(item["item"]).search(note)
+        if not match:  # an earlier swap in this note already replaced overlapping text
+            continue
         original = match.group(0)
         replacement = new.capitalize() if original[:1].isupper() else new
         note = note[: match.start()] + replacement + note[match.end() :]

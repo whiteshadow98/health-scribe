@@ -1,0 +1,29 @@
+[
+ {
+  "mode": "generic",
+  "parse": {
+   "notes": 160,
+   "exact_match_%": 0.0,
+   "sleep_%": 23.8,
+   "intake_F1": 68.1,
+   "intake_category_%": 95.8,
+   "intake_time_%": 31.7,
+   "activities_F1": 39.3,
+   "activities_duration_mins_%": 76.2,
+   "activities_time_%": 7.1,
+   "symptoms_F1": 59.7,
+   "symptoms_severity_%": 49.2,
+   "symptoms_location_%": 53.3,
+   "symptoms_time_%": 8.2,
+   "valid_json_%": 100.0,
+   "seconds_per_note_mac": 5.33
+  },
+  "plan": {
+   "plan_kind_%": 84.0,
+   "plan_trigger_%": 78.0,
+   "plan_subject_%": 76.0,
+   "plan_days_%": 76.0,
+   "plan_all_%": 41.0
+  }
+ }
+]

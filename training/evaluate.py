@@ -101,7 +101,7 @@ def main() -> None:
         pred = sanitize_log(data)
         score = score_log(pred, ex["label"])
         rows.append(score)
-        details.append({"note": ex["note"], "expected": ex["label"], "predicted": pred, "raw": out if not ok else None, "exact": score["exact"]})
+        details.append({"id": ex["id"], "note": ex["note"], "expected": ex["label"], "predicted": pred, "raw": out if not ok else None, "exact": score["exact"]})
         if i % 20 == 0:
             print(f"  {i}/{len(notes)} notes, {time.time() - start:.0f}s")
     summary = summarize_scores(rows)

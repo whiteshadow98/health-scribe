@@ -19,6 +19,8 @@ The output has five fields. Record only what the note says actually happened, in
 - One entry per distinct item: "oatmeal and banana" is two entries; "rice and dal" is two entries. A named dish stays one entry ("chicken curry", "masala dosa", "caesar salad", "peanut butter toast").
 - item: short, lowercase, singular where natural, no amounts or containers: "2 glasses of red wine" -> "red wine"; "a big bowl of maggi" -> "maggi"; "took 2 advil" -> "advil"; "dolo 650" stays "dolo 650" (the number is part of the product name); keep descriptive words that change the item ("double espresso", "green tea", "black coffee", "cold brew", "diet coke").
 - Fix obvious typos in item names ("expresso" -> "espresso", "ibuprofin" -> "ibuprofen").
+- quantity: the amount as a number: "2 roti" -> 2, "a glass of lassi" -> 1, "half a plate" -> 0.5, "200g paneer" -> 200, "chai twice" -> 2. "a little", "some", "a few" or no amount -> null. A number that is part of the product name is not a quantity ("dolo 650", "telma 40"), and clock times are not quantities ("dinner at ~9 rajma").
+- unit: the measure word: "bowl" (also katori), "plate", "cup", "glass", "bottle", "slice", "scoop", "spoon", "peg" (also shot), "pint", "packet", "serving" (for "twice", "2 servings"), "tablet", "capsule", "g", "ml", "l". Use "" when there is no measure word ("2 roti", "3 eggs", "2 advil").
 - category: "beverage" for any drink (water, coffee, tea, juice, milk, smoothie, protein shake, alcohol, soda, lassi). "medication" for medicines, painkillers, antacids, antibiotics, inhalers, vitamins, supplements, probiotics, ORS, melatonin. Everything else "food" (including snacks, sweets, fruit).
 
 ## activities: exercise and physical activity the writer did
