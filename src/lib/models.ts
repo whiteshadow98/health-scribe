@@ -50,10 +50,16 @@ export async function detectDevice(): Promise<DeviceSupport> {
  */
 export const FINETUNED_MODEL = {
   enabled: true,
-  id: 'HealthScribe-Qwen2.5-1.5B-q4f16_1-MLC',
-  url: 'https://huggingface.co/whiteshadow98/health-scribe-qwen2.5-1.5b-q4f16_1-MLC',
+  id: 'HealthScribe-v3-Qwen2.5-1.5B-q4f16_1-MLC',
+  url: 'https://huggingface.co/whiteshadow98/health-scribe-v3-qwen2.5-1.5b-q4f16_1-MLC',
   baseId: 'Qwen2.5-1.5B-Instruct-q4f16_1-MLC',
 }
+
+/** Earlier fine-tuned releases. A new release gets a new id and URL so browsers download it
+ * fresh; these are deleted from the cache once the current model has loaded. */
+export const RETIRED_FINETUNED_MODELS = [
+  { id: 'HealthScribe-Qwen2.5-1.5B-q4f16_1-MLC', url: 'https://huggingface.co/whiteshadow98/health-scribe-qwen2.5-1.5b-q4f16_1-MLC' },
+]
 
 /** WebLLM model id. Devices without half-precision shaders need the f32 build of the generic model. */
 export function modelId(size: ModelSize, device: DeviceSupport): string {

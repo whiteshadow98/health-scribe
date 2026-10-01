@@ -49,7 +49,7 @@ WebLLM Qwen2 WebGPU library runs them unchanged.
 
 ## Training data
 
-About 1,000 synthetic notes (roughly 80% set in India: regional foods, Indian medicine brands, Hinglish) and about
+About 1,200 synthetic notes (roughly 85% set in India: regional foods, Indian medicine brands, Hinglish) and about
 1,100 synthetic questions, written and labeled by Claude (Anthropic) following a fixed labeling rulebook, plus
 label-preserving augmentations. No real user data was used.
 

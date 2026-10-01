@@ -8,7 +8,7 @@ import {
   type DeviceSupport,
   type ModelSize,
 } from './models'
-import { getAppConfig, isModelCached as isCached, webllm } from './webllm'
+import { deleteRetiredModels, getAppConfig, isModelCached as isCached, webllm } from './webllm'
 
 export type LlmStatus =
   | 'checking' // Detecting WebGPU and looking for a cached model
@@ -101,6 +101,7 @@ export function LlmProvider({ children }: { children: ReactNode }) {
         setProgress(1)
         setStatus('ready')
         loadingRef.current = false
+        void deleteRetiredModels()
         return
       } catch (err) {
         console.error(`Model load failed: ${id}`, err)

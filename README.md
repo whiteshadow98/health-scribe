@@ -30,21 +30,21 @@ Live app: https://whiteshadow98.github.io/health-scribe/
 
 ## The fine-tuned model
 
-The generic Qwen2.5 1.5B model made frequent mistakes on this task (inventing items and sleep, missing times). The app uses a version fine-tuned by knowledge distillation: a large model (Claude) wrote and labeled about 1,000 realistic synthetic notes and 1,100 questions, mostly Indian, following a fixed rulebook, and the small model was trained on them with LoRA on a Mac (MLX). No real user data was used.
+The generic Qwen2.5 1.5B model made frequent mistakes on this task (inventing items and sleep, missing times). The app uses a version fine-tuned by knowledge distillation: a large model (Claude) wrote and labeled about 1,200 realistic synthetic notes and 1,100 questions, mostly Indian, following a fixed rulebook, and the small model was trained on them with LoRA on a Mac (MLX). No real user data was used.
 
 Measured on 160 held-out test notes in Chrome under the same conditions as the app:
 
-| | Generic 1.5B | Fine-tuned v2 |
+| | Generic 1.5B | Fine-tuned v3 |
 |---|---|---|
-| Notes fully correct | 0% | 21% |
-| Food and drink found (F1) | 70 | 92 |
-| Symptoms found (F1) | 60 | 85 |
-| Symptom severity correct | 49% | 86% |
-| Sleep correct | 24% | 96% |
+| Notes fully correct | 0% | 27% |
+| Food and drink found (F1) | 70 | 94 |
+| Food and drink times correct | 31% | 84% |
+| Activities found (F1) | 39 | 93 |
+| Symptoms found (F1) | 60 | 86 |
+| Symptom severity correct | 49% | 89% |
+| Sleep correct | 24% | 98% |
 | Amounts and units correct | n/a | 95% / 98% |
-| Insights questions fully correct | 41% | 91% |
-
-Known weak spot: in long notes, a bare time like "at 6" is sometimes read as morning when the note means evening.
+| Insights questions fully correct | 41% | 92% |
 
 See [`training/`](training/) for the data generator, labeling rules, training config, evaluation and a WebLLM weight converter (`mlc_convert.py`) verified byte-for-byte against the official MLC files.
 

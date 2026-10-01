@@ -1,5 +1,5 @@
 import type { AppConfig } from '@mlc-ai/web-llm'
-import { FINETUNED_MODEL } from './models'
+import { FINETUNED_MODEL, RETIRED_FINETUNED_MODELS } from './models'
 
 // WebLLM is large, so it loads after the first paint instead of blocking it.
 export const webllm = () => import('@mlc-ai/web-llm')
@@ -13,7 +13,10 @@ export function getAppConfig(): Promise<AppConfig> {
     if (!base || !FINETUNED_MODEL.enabled) return prebuiltAppConfig
     return {
       ...prebuiltAppConfig,
-      model_list: [...prebuiltAppConfig.model_list, { ...base, model: FINETUNED_MODEL.url, model_id: FINETUNED_MODEL.id }],
+      model_list: [
+        ...prebuiltAppConfig.model_list,
+        ...[FINETUNED_MODEL, ...RETIRED_FINETUNED_MODELS].map((m) => ({ ...base, model: m.url, model_id: m.id })),
+      ],
     }
   })
   return appConfigPromise
@@ -27,4 +30,11 @@ export async function isModelCached(id: string): Promise<boolean> {
 export async function deleteCachedModel(id: string): Promise<void> {
   const [{ deleteModelAllInfoInCache }, appConfig] = await Promise.all([webllm(), getAppConfig()])
   await deleteModelAllInfoInCache(id, appConfig).catch(() => undefined)
+}
+
+/** Frees the storage used by earlier fine-tuned releases. */
+export async function deleteRetiredModels(): Promise<void> {
+  for (const { id } of RETIRED_FINETUNED_MODELS) {
+    if (await isModelCached(id)) await deleteCachedModel(id)
+  }
 }

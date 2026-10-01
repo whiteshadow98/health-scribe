@@ -27,5 +27,63 @@
    "plan_days_%": 99.2,
    "plan_all_%": 90.7
   }
+ },
+ {
+  "mode": "v3",
+  "parse": {
+   "notes": 131,
+   "exact_match_%": 26.7,
+   "sleep_%": 97.7,
+   "intake_F1": 94.5,
+   "intake_category_%": 99.0,
+   "intake_time_%": 83.1,
+   "intake_quantity_%": 94.5,
+   "intake_unit_%": 98.3,
+   "activities_F1": 90.7,
+   "activities_duration_mins_%": 87.2,
+   "activities_time_%": 94.9,
+   "symptoms_F1": 88.6,
+   "symptoms_severity_%": 89.4,
+   "symptoms_location_%": 95.0,
+   "symptoms_time_%": 91.9,
+   "valid_json_%": 100.0,
+   "seconds_per_note_mac": 7.09
+  },
+  "plan": {
+   "plan_kind_%": 99.2,
+   "plan_trigger_%": 97.5,
+   "plan_subject_%": 96.6,
+   "plan_days_%": 99.2,
+   "plan_all_%": 92.4
+  }
+ },
+ {
+  "mode": "v3-750",
+  "parse": {
+   "notes": 131,
+   "exact_match_%": 11.5,
+   "sleep_%": 96.9,
+   "intake_F1": 93.4,
+   "intake_category_%": 98.7,
+   "intake_time_%": 56.3,
+   "intake_quantity_%": 94.4,
+   "intake_unit_%": 98.7,
+   "activities_F1": 89.4,
+   "activities_duration_mins_%": 84.2,
+   "activities_time_%": 94.7,
+   "symptoms_F1": 86.5,
+   "symptoms_severity_%": 87.3,
+   "symptoms_location_%": 92.4,
+   "symptoms_time_%": 83.4,
+   "valid_json_%": 100.0,
+   "seconds_per_note_mac": 4.86
+  },
+  "plan": {
+   "plan_kind_%": 96.6,
+   "plan_trigger_%": 94.9,
+   "plan_subject_%": 96.6,
+   "plan_days_%": 98.3,
+   "plan_all_%": 89.8
+  }
  }
 ]

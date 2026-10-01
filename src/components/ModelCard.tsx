@@ -93,6 +93,7 @@ export function ModelCard({ purpose }: { purpose: string }) {
       <div
         className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100"
         role="progressbar"
+        aria-label="Model download progress"
         aria-valuenow={percent}
         aria-valuemin={0}
         aria-valuemax={100}
