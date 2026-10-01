@@ -213,8 +213,18 @@ def sanitize_plan(raw) -> dict:
 _WORD = re.compile(r"[a-z0-9]+")
 
 
+def _singular(w: str) -> str:
+    if len(w) > 4 and w.endswith("ies"):
+        return w[:-3] + "y"  # berries -> berry
+    if len(w) > 3 and w.endswith("es") and w[-3] in "sxz":
+        return w[:-2]  # glasses -> glass
+    if len(w) > 3 and w.endswith("s") and not w.endswith("ss"):
+        return w[:-1]  # eggs -> egg
+    return w
+
+
 def _tokens(s: str) -> set[str]:
-    return {w for w in _WORD.findall(s.lower()) if len(w) > 1}
+    return {_singular(w) for w in _WORD.findall(s.lower()) if len(w) > 1}
 
 
 def _name_match(a: str, b: str) -> bool:

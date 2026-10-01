@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import re
 import sys
 import time
 from datetime import datetime, timedelta
@@ -456,11 +457,20 @@ def cmd_cancel(args, client: anthropic.Anthropic) -> None:
     save_batches(batches)
 
 
+LONG_STYLES = [
+    "full-day recap in order, 60-120 words, 5+ foods with amounts, an activity or nap late in the note, several clock times",
+    "rambling voice recap of the whole day, 80-120 words, fillers, times said like 'at 6' where morning or evening must come from context",
+    "line-by-line list of the day, 7-10 lines, mixing meals, medicines, an activity and symptoms with times",
+]
+
+
 def cmd_specs(args, client) -> None:
     """Prints note specs for writing training data by hand (in a Claude Code session) in chunks."""
     rng = random.Random(5000 + args.chunk)
     for part in range(args.requests):
         prompt, whens = parse_request_prompt(rng, NOTES_PER_REQUEST, indian_share=args.indian_share)
+        if args.long:
+            prompt = re.sub(r"Style: [^.]*(\([^)]*\))?[^.]*\.", lambda m: f"Style: {rng.choice(LONG_STYLES)}.", prompt)
         print(f"--- part {part} (ids: session-{args.chunk}-{part}-0..{NOTES_PER_REQUEST - 1})")
         print(prompt.split("\n\nReturn")[0])
         print("written_at:", " ".join(whens))
@@ -530,14 +540,9 @@ def cmd_relabel(args, client: anthropic.Anthropic) -> None:
 
 def merge_outputs() -> None:
     """Writes data/parse_{split}.jsonl and data/plan_{split}.jsonl from everything collected."""
+    write_agreed_eval_ids()
     for split in ("train", "eval"):
         parse_rows = [r for f in sorted(RAW.glob(f"parse_{split}_*.jsonl")) for r in read_jsonl(f)]
-        if split == "eval":
-            second = {r["id"]: r["label2"] for f in sorted(RAW.glob("relabel_eval_*.jsonl")) for r in read_jsonl(f)}
-            if second:
-                agreed = [r for r in parse_rows if r["id"] in second and score_log(second[r["id"]], r["label"])["exact"] == 1]
-                print(f"eval: {len(agreed)} of {len(parse_rows)} notes had matching independent labels")
-                parse_rows = agreed
         if parse_rows:
             write_jsonl(DATA / f"parse_{split}.jsonl", parse_rows)
             print(f"data/parse_{split}.jsonl: {len(parse_rows)} examples")
@@ -545,6 +550,19 @@ def merge_outputs() -> None:
         if plan_rows:
             write_jsonl(DATA / f"plan_{split}.jsonl", plan_rows)
             print(f"data/plan_{split}.jsonl: {len(plan_rows)} examples")
+
+
+def write_agreed_eval_ids() -> None:
+    """Notes where an independent second labeling matched the first (ignoring quantities, which the
+    second pass did not have). Saved as a trusted subset for scoring; the full test set is kept."""
+    second = {r["id"]: r["label2"] for f in sorted(RAW.glob("relabel_eval_*.jsonl")) for r in read_jsonl(f)}
+    if not second:
+        return
+    strip = lambda log: {**log, "intake": [{k: v for k, v in i.items() if k not in ("quantity", "unit")} for i in log["intake"]]}
+    rows = [r for f in sorted(RAW.glob("parse_eval_*.jsonl")) for r in read_jsonl(f)]
+    agreed = [r["id"] for r in rows if r["id"] in second and score_log(strip(second[r["id"]]), strip(r["label"]))["exact"] == 1]
+    (DATA / "parse_eval_agreed_ids.json").write_text(json.dumps(agreed))
+    print(f"eval: {len(agreed)} of {len(rows)} notes had matching independent labels (trusted subset)")
 
 
 def main() -> None:
@@ -575,6 +593,7 @@ def main() -> None:
     k.add_argument("--chunk", type=int, required=True)
     k.add_argument("--requests", type=int, default=3)
     k.add_argument("--indian-share", type=float, default=0.8)
+    k.add_argument("--long", action="store_true", help="Long full-day notes (targets v2's weak spots)")
     sub.add_parser("status")
     sub.add_parser("collect")
     r = sub.add_parser("relabel")

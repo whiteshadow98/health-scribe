@@ -28,9 +28,12 @@ def strip_quantities(log: dict) -> dict:
     return {**log, "intake": [{k: v for k, v in i.items() if k not in ("quantity", "unit")} for i in log.get("intake", [])]}
 
 
-def score_file(path: Path, ignore_quantity: bool) -> dict:
+def score_file(path: Path, ignore_quantity: bool, trusted: bool = False) -> dict:
     run = json.loads(path.read_text())
     refs = {r["id"]: r for r in read_jsonl(DATA / "parse_eval.jsonl")}
+    if trusted:
+        keep = set(json.loads((DATA / "parse_eval_agreed_ids.json").read_text()))
+        refs = {k: v for k, v in refs.items() if k in keep}
     rows, valid, secs = [], 0, []
     for p in run["parse"]:
         if p["id"] not in refs:
@@ -60,7 +63,7 @@ def score_file(path: Path, ignore_quantity: bool) -> dict:
 
 def main() -> None:
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    results = [score_file(Path(p), "--ignore-quantity" in sys.argv) for p in args]
+    results = [score_file(Path(p), "--ignore-quantity" in sys.argv, "--trusted" in sys.argv) for p in args]
     keys = list(results[0]["parse"]) + list(results[0]["plan"])
     print(f"{'metric':32}" + "".join(f"{r['mode']:>14}" for r in results))
     for k in keys:

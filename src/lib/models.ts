@@ -49,7 +49,7 @@ export async function detectDevice(): Promise<DeviceSupport> {
  * Set `enabled` once the weights are published.
  */
 export const FINETUNED_MODEL = {
-  enabled: false,
+  enabled: true,
   id: 'HealthScribe-Qwen2.5-1.5B-q4f16_1-MLC',
   url: 'https://huggingface.co/whiteshadow98/health-scribe-qwen2.5-1.5b-q4f16_1-MLC',
   baseId: 'Qwen2.5-1.5B-Instruct-q4f16_1-MLC',
